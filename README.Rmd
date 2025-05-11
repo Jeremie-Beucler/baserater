@@ -9,10 +9,16 @@ vignette: >
 
 The `baserater` package allows to:  
 
-- Download LLM‑generated stereotype datasets and human validation ratings from the original paper.  
+- Download LLM‑generated base-rate item datasets and human validation ratings from the original paper.  
 - Generate new typicality scores with any Hugging Face model.  
-- Benchmark new scores against human ground truth and strong LLM baselines.  
-- Build base‑rate stereotype tables from typicality matrices.  
+- Benchmark new scores against human ground truth, and compare performance against strong LLM baselines.  
+- Build base‑rate items database from typicality matrices.
+
+To learn more about the theoretical framework, modeling rationale, and validation studies underlying the baserater package, see our forthcoming paper:
+
+**Using Large Language Models to Estimate Belief Strength in Reasoning**
+*Jérémie Beucler, Zoe Purcell, Lucie Charles, and Wim De Neys*
+(Preprint link)
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
