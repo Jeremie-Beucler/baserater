@@ -1,35 +1,4 @@
-pandoc: '3.2'
-pkgdown: 2.0.7
-pkgdown_sha: ~
-
-home:
-  title: baserater
-  tagline: Tools for Base-Rate Item Evaluation and LLM Typicality Scoring
-  overview: README.md
-
-articles:
-  - title: Introduction to the baserater package
-    contents:
-      - Introduction-to-the-baserater-package
-  - title: Additional Examples
-    contents:
-      - baserater
-
-url: https://jeremie-beucler.github.io/baserater
+url: https://jeremie-beucler.github.io/baserater/
 template:
   bootstrap: 5
-  bootswatch: flatly
 
-authors:
-  footer: "Maintained by Jérémie Beucler."
-
-reference:
-  title: Reference
-  desc: >
-    Core functions to download, score, and evaluate base-rate items and model-generated typicality ratings.
-
-  contents:
-    - download_data
-    - hf_typicality
-    - evaluate_external_ratings
-    - extract_base_rate_items
