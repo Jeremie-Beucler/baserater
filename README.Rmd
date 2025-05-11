@@ -2,12 +2,10 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
+  comment  = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -15,42 +13,64 @@ knitr::opts_chunk$set(
 
 # baserater
 
-<!-- badges: start -->
-[![R-CMD-check](https://github.com/Jeremie-Beucler/baserater/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Jeremie-Beucler/baserater/actions/workflows/R-CMD-check.yaml)
-<!-- badges: end -->
-
-The goal of baserater is to ...
+`baserater` helps you:
+- Download LLM‑generated stereotype datasets and human validation ratings (from the accompanying paper)
+- Generate new typicality scores with any Hugging Face model
+- Benchmark scores against human ground truth and strong LLM baselines
+- Build base‑rate stereotype tables from typicality matrices
 
 ## Installation
 
-You can install the development version of baserater from [GitHub](https://github.com/) with:
-
-``` r
+```{r}
+# for dev version
 # install.packages("pak")
 pak::pak("Jeremie-Beucler/baserater")
 ```
 
-## Example
+## Download data
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
+```{r}
 library(baserater)
-## basic example code
+
+database <- download_data("database")             # full base‑rate set
+ratings   <- download_data("validation_ratings")  # 100 human‑rated items
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+## Evaluate model predictions
 
-```{r cars}
-summary(cars)
+```{r}
+# Compare model ratings to human judgments and baseline LLMs (GPT-4, LLaMA 3.3)
+evaluate_external_ratings(ratings)  # Replace with your own scores if needed
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+## Generate scores with an LLM
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r}
+new_scores <- hf_typicality(
+  groups       = c("nurse", "clown"),
+  descriptions = c("caring", "funny"),
+  model        = "meta-llama/Llama-3.1-8B-Instruct",
+  hf_token     = "your_token_here",
+  n            = 10,
+  min_valid    = 8,
+  matrix       = FALSE # matrix = FALSE → pairwise; TRUE → full group–description matrix
+)
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+## Build a base‑rate dataset
+
+```{r}
+gpt4_matrix    <- download_data("similarity_matrix_gpt4")
+# create base-rate items with stereotype strength for each pair of groups and description
+base_rate_tbl  <- extract_base_rate_items(gpt4_matrix)
+```
+
+## More
+
+Full documentation: https://jeremie-beucler.github.io/baserater/
+
+Paper: Using Large Language Models to Estimate Belief Strength in Reasoning (Beucler et al. - forthcoming)
+
+## License
+
+GPL‑3
