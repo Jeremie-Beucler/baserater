@@ -1,15 +1,19 @@
-Introduction to the baserater package
+Getting started with the baserater package
 ================
 
-The `baserater` package allows to: - Download LLM‑generated stereotype
-datasets and human validation ratings from the original paper - Generate
-new typicality scores with any Hugging Face model - Benchmark new scores
-against human ground truth and strong LLM baselines - Build base‑rate
-stereotype tables from typicality matrices
+The `baserater` package allows to:
+
+- Download LLM‑generated stereotype datasets and human validation
+  ratings from the original paper.  
+- Generate new typicality scores with any Hugging Face model.  
+- Benchmark new scores against human ground truth and strong LLM
+  baselines.  
+- Build base‑rate stereotype tables from typicality matrices.
 
 ## Installation
 
 ``` r
+# development version
 # install.packages("pak")
 pak::pak("Jeremie-Beucler/baserater")
 ```
@@ -18,11 +22,9 @@ pak::pak("Jeremie-Beucler/baserater")
 
 ``` r
 library(tidyverse)
-#> Warning: package 'ggplot2' was built under R version 4.3.3
-#> Warning: package 'purrr' was built under R version 4.3.3
 library(baserater)
 
-database <- download_data("database")             # full base‑rate set
+database <- download_data("database")             # full base‑rate item database
 ratings   <- download_data("validation_ratings")  # 100 human‑rated items
 ```
 
@@ -43,6 +45,7 @@ new_scores <- hf_typicality(
 ## Evaluate model predictions
 
 ``` r
+# load new precomputed new scores
 new_scores <- readRDS(system.file("extdata", "new_typicality_scores_llama3.1_8B.rds", package = "baserater"))
 
 new_scores <- new_scores %>% 
@@ -62,10 +65,11 @@ base_rate_tbl  <- extract_base_rate_items(gpt4_matrix)
 
 ## More
 
-Full documentation: <https://jeremie-beucler.github.io/baserater/>
+Full documentation:
+<https://jeremie-beucler.github.io/baserater/reference/index.html>
 
-Forthcoming paper: *Using Large Language Models to Estimate Belief
-Strength in Reasoning* (Beucler et al.)
+Paper: *Using Large Language Models to Estimate Belief Strength in
+Reasoning* (Beucler et al. - forthcoming)
 
 ## License
 
