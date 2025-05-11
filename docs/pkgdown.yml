@@ -3,5 +3,9 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   Introduction-to-the-baserater-package: Introduction-to-the-baserater-package.html
-last_built: 2025-05-11T22:05Z
+  baserater: baserater.html
+last_built: 2025-05-11T22:23Z
+urls:
+  reference: https://jeremie-beucler.github.io/baserater/reference
+  article: https://jeremie-beucler.github.io/baserater/articles
 

@@ -26,3 +26,4 @@ Suggests:
     rmarkdown,
     tidyverse
 VignetteBuilder: knitr
+URL: https://jeremie-beucler.github.io/baserater/

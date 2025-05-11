@@ -4,6 +4,8 @@
 # baserater
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/Jeremie-Beucler/baserater/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Jeremie-Beucler/baserater/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of baserater is to …
