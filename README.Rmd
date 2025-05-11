@@ -32,7 +32,7 @@ pak::pak("Jeremie-Beucler/baserater")
 
 ## Download data
 
-```{r, warning = FALSE}
+```{r, warning = FALSE, message = FALSE, echo = FALSE}
 library(tidyverse)
 library(baserater)
 

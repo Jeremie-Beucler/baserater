@@ -20,14 +20,6 @@ pak::pak("Jeremie-Beucler/baserater")
 
 ## Download data
 
-``` r
-library(tidyverse)
-library(baserater)
-
-database <- download_data("database")             # full base‑rate item database
-ratings   <- download_data("validation_ratings")  # 100 human‑rated items
-```
-
 ## Generate scores with an LLM
 
 ``` r
