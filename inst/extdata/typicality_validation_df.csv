@@ -1,0 +1,101 @@
+"trial","adjective","group","mean_human_rating","mean_gpt4_rating","mean_llama3_rating"
+"DJ_naive","naive","DJ",29.7,20,19.05
+"accountant_solitary","solitary","accountant",67.62,65.4,70.95
+"actor_altruistic","altruistic","actor",46.94,34.6,30
+"aerobics instructor_impulsive","impulsive","aerobics instructor",45.92,36.6,75.71
+"architect_charismatic","charismatic","architect",48,35.2,70
+"architect_reserved","reserved","architect",54.94,62.8,68.57
+"artist_confident","confident","artist",67.7,72.2,80
+"artist_generous","generous","artist",52.06,51.92,66.67
+"assistant_dishonest","dishonest","assistant",29.68,21,1.43
+"assistant_generous","generous","assistant",49.98,68,59.05
+"bartender_moody","moody","bartender",43.08,37.36,66.67
+"bartender_social","social","bartender",91.28,89,88.33
+"boxer_attractive","attractive","boxer",52,44.68,77.14
+"boxer_disorganized","disorganized","boxer",35,17.8,23.81
+"boxer_muscular","muscular","boxer",93.64,91.8,90.24
+"boxer_solitary","solitary","boxer",47.8,65.8,20.48
+"boxer_zealous","zealous","boxer",65.96,79.4,80.71
+"businessman_rational","rational","businessman",71.18,85,80.71
+"chef_creative","creative","chef",86.94,87.4,80.71
+"chef_funny","funny","chef",37.5,27.8,39.52
+"chef_warm","warm","chef",51.22,61.56,60
+"clown_disorganized","disorganized","clown",48.84,63.4,79.52
+"computer programmer_inventive","inventive","computer programmer",79.78,85.92,82.57
+"construction worker_dishonest","dishonest","construction worker",37.2,33.92,35.71
+"construction worker_stubborn","stubborn","construction worker",52.42,45,77.62
+"consultant_conservative","conservative","consultant",48.86,49.8,49.52
+"consultant_friendly","friendly","consultant",68.64,62.8,57.14
+"consultant_social","social","consultant",66.64,79.4,58.1
+"dentist_charismatic","charismatic","dentist",42.92,35,38.1
+"doctor_intelligent","intelligent","doctor",93.86,92.88,95.29
+"doctor_organized","organized","doctor",80.76,88.2,90
+"drummer_attractive","attractive","drummer",55.46,68.2,67.62
+"drummer_inventive","inventive","drummer",63.86,44.4,80
+"drummer_naive","naive","drummer",31.7,19,37.14
+"electrician_confident","confident","electrician",66.46,72.2,76.67
+"electrician_narcissistic","narcissistic","electrician",25.86,11.28,5
+"engineer_reserved","reserved","engineer",58.36,74.2,80
+"environmental activist_active","active","environmental activist",74.42,94.4,90.71
+"environmental activist_cooperative","cooperative","environmental activist",44.34,83.2,80
+"environmental activist_warm","warm","environmental activist",51.76,70.8,74.76
+"farmer_empathetic","empathetic","farmer",52.14,48.8,43.81
+"farmer_gentle","gentle","farmer",58.12,63.08,40.95
+"farmer_hardworking","hardworking","farmer",95.18,91,89.14
+"fashion designer_loud","loud","fashion designer",55.7,32,26.67
+"fashion model_attractive","attractive","fashion model",96.58,95.8,96.57
+"fashion model_impulsive","impulsive","fashion model",53.24,55.36,74.76
+"fireman_brave","brave","fireman",96.78,94.6,94.76
+"fireman_impulsive","impulsive","fireman",39.1,40.6,62.38
+"fitness trainer_inventive","inventive","fitness trainer",55.78,45.8,65.24
+"fitness trainer_naive","naive","fitness trainer",32.24,15.4,20
+"flight attendant_immature","immature","flight attendant",22.54,15.6,20
+"flight attendant_lazy","lazy","flight attendant",18.76,15,0.48
+"flight attendant_muscular","muscular","flight attendant",23.8,18.4,20
+"flight attendant_narrow-minded","narrow-minded","flight attendant",30.34,16,15.24
+"gardener_charismatic","charismatic","gardener",46.26,23,20.95
+"high school coach_nerdy","nerdy","high school coach",33.14,14.4,10.71
+"hippy_active","active","hippy",54.42,61.2,49.05
+"hippy_shy","shy","hippy",31.4,25.8,20
+"historian_nerdy","nerdy","historian",86.46,51.6,79.05
+"journalist_ambitious","ambitious","journalist",76.82,83.8,80
+"journalist_disorganized","disorganized","journalist",29.66,38.36,39.52
+"journalist_kind","kind","journalist",40.96,42.4,37.62
+"kindergarten teacher_helpful","helpful","kindergarten teacher",93.16,91.68,95
+"lab technician_creative","creative","lab technician",45.68,34.8,30.95
+"librarian_bossy","bossy","librarian",56.7,30,70
+"music producer_friendly","friendly","music producer",53.52,56.8,43.81
+"nanny_altruistic","altruistic","nanny",62.36,77.4,88.57
+"nanny_naive","naive","nanny",36.52,22.2,70.95
+"nanny_trustworthy","trustworthy","nanny",86.3,85.4,89.52
+"nurse_active","active","nurse",78.24,84.6,84.62
+"nurse_brave","brave","nurse",80.52,78.2,80
+"nurse_inventive","inventive","nurse",44.74,42,40
+"paramedic_disorganized","disorganized","paramedic",16.98,17,19.05
+"paramedic_generous","generous","paramedic",70.32,79.2,81.43
+"photographer_loud","loud","photographer",36.72,11.6,20
+"pilot_cooperative","cooperative","pilot",73.64,76.2,80
+"police officer_extravagant","extravagant","police officer",24,13,10
+"police officer_lazy","lazy","police officer",36.58,19.68,4.76
+"police officer_solitary","solitary","police officer",46.1,23.2,20
+"psychologist_unconventional","unconventional","psychologist",55.76,57,58.1
+"real estate agent_impulsive","impulsive","real estate agent",46.34,37.6,70.95
+"real estate agent_organized","organized","real estate agent",72.48,84,80.24
+"real estate agent_passionate","passionate","real estate agent",57.36,75,80
+"scientist_rational","rational","scientist",83.3,91.8,93.81
+"scientist_unconventional","unconventional","scientist",61.6,72.2,53.33
+"secretary_extravagant","extravagant","secretary",31.6,12.8,20
+"secretary_shy","shy","secretary",39.92,36.4,73.33
+"sixteen year old_reserved","reserved","sixteen year old",52.6,31.4,20
+"sixteen year old_shy","shy","sixteen year old",63.06,58.6,65.24
+"social worker_ambitious","ambitious","social worker",61.9,66.72,80
+"social worker_social","social","social worker",81.16,91.68,90
+"soldier_charismatic","charismatic","soldier",47.96,44.8,62.86
+"soldier_loud","loud","soldier",62.78,27,65.71
+"soldier_social","social","soldier",46.58,44.8,20
+"surgeon_creative","creative","surgeon",47.46,52.8,32.38
+"surgeon_meticulous","meticulous","surgeon",91.72,94.68,95
+"surgeon_persuasive","persuasive","surgeon",52.54,46.4,47.62
+"telemarketer_argumentative","argumentative","telemarketer",62.56,61.6,78.76
+"veterinarian_ambitious","ambitious","veterinarian",66.78,73.6,80
+"writer_idealistic","idealistic","writer",79.06,77.6,80
