@@ -6,7 +6,8 @@ Authors@R:
 Description: Tools to download typicality rating datasets, generate new 
     stereotype-based ratings using large language models (LLMs) via the 
     Hugging Face API, and evaluate them against human-annotated validation data. 
-    Also includes method to extract base-rate database from typicality matrices.
+    Also includes functions to extract stereotype strength and base-rate items 
+    from typicality matrices.
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

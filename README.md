@@ -1,37 +1,25 @@
----
-title: "Introduction to the baserater package"
-output: github_document
-vignette: >
-  %\VignetteIndexEntry{Introduction to the baserater package}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
+Introduction to the baserater package
+================
 
-The `baserater` package allows to:
-- Download LLM‑generated stereotype datasets and human validation ratings from the original paper
-- Generate new typicality scores with any Hugging Face model
-- Benchmark new scores against human ground truth and strong LLM baselines
-- Build base‑rate stereotype tables from typicality matrices
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment  = "#>",
-  message  = FALSE
-)
-```
+The `baserater` package allows to: - Download LLM‑generated stereotype
+datasets and human validation ratings from the original paper - Generate
+new typicality scores with any Hugging Face model - Benchmark new scores
+against human ground truth and strong LLM baselines - Build base‑rate
+stereotype tables from typicality matrices
 
 ## Installation
 
-```{r}
+``` r
 # install.packages("pak")
 pak::pak("Jeremie-Beucler/baserater")
 ```
 
 ## Download data
 
-```{r}
+``` r
 library(tidyverse)
+#> Warning: package 'ggplot2' was built under R version 4.3.3
+#> Warning: package 'purrr' was built under R version 4.3.3
 library(baserater)
 
 database <- download_data("database")             # full base‑rate set
@@ -40,7 +28,7 @@ ratings   <- download_data("validation_ratings")  # 100 human‑rated items
 
 ## Generate scores with an LLM
 
-```{r}
+``` r
 new_scores <- hf_typicality(
   groups       = c("nurse", "clown"),
   descriptions = c("caring", "funny"),
@@ -54,7 +42,7 @@ new_scores <- hf_typicality(
 
 ## Evaluate model predictions
 
-```{r}
+``` r
 new_scores <- readRDS(system.file("extdata", "new_typicality_scores_llama3.1_8B.rds", package = "baserater"))
 
 new_scores <- new_scores %>% 
@@ -67,16 +55,17 @@ evaluate_external_ratings(new_scores)
 
 ## Build a base-rate item dataset
 
-```{r}
+``` r
 gpt4_matrix    <- download_data("similarity_matrix_gpt4")
 base_rate_tbl  <- extract_base_rate_items(gpt4_matrix)
 ```
 
 ## More
 
-Full documentation: https://jeremie-beucler.github.io/baserater/
+Full documentation: <https://jeremie-beucler.github.io/baserater/>
 
-Forthcoming paper: *Using Large Language Models to Estimate Belief Strength in Reasoning* (Beucler et al.)
+Forthcoming paper: *Using Large Language Models to Estimate Belief
+Strength in Reasoning* (Beucler et al.)
 
 ## License
 
