@@ -2,7 +2,7 @@
 % Please edit documentation in R/download.R
 \name{download_data}
 \alias{download_data}
-\title{Load base‑rate database or validation ratings from package}
+\title{Load base‑rate database, similarity matrices or human validation ratings from package}
 \usage{
 download_data(
   which = c("database", "validation_ratings", "similarity_matrix_gpt4",

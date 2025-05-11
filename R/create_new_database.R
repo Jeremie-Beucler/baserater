@@ -1,4 +1,4 @@
-#' Extract Base-Rate Items from a Typicality Matrix
+#' Create base-rate items from groups x descriptions typicality matrix
 #'
 #' This function processes a typicality matrix to identify base-rate items
 #' by comparing typicality scores of descriptions between all unique pairs of groups.

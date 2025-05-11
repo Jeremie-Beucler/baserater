@@ -2,7 +2,7 @@
 % Please edit documentation in R/evaluate_new_ratings.R
 \name{evaluate_external_ratings}
 \alias{evaluate_external_ratings}
-\title{Evaluate external typicality ratings against human and LLM model baselines}
+\title{Evaluate how new typicality ratings predict human ratings and compares performance to strong LLM model baselines}
 \usage{
 evaluate_external_ratings(
   df,

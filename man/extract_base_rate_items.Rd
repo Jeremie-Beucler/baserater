@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_new_database.R
 \name{extract_base_rate_items}
 \alias{extract_base_rate_items}
-\title{Extract Base-Rate Items from a Typicality Matrix}
+\title{Create base-rate items from groups x descriptions typicality matrix}
 \usage{
 extract_base_rate_items(typicality_matrix)
 }

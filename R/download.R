@@ -1,4 +1,4 @@
-#' Load base‑rate database or validation ratings from package
+#' Load base‑rate database, similarity matrices or human validation ratings from package
 #'
 #' The "database" contains all base-rate items with stereotype strengths
 #' from GPT-4 and LLaMA 3.3.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/generate_new_ratings.R
 \name{hf_typicality}
 \alias{hf_typicality}
-\title{Experimental Function to Generate Typicality Ratings via Hugging Face}
+\title{Generate typicality ratings via Hugging Face (experimental)}
 \usage{
 hf_typicality(
   groups,

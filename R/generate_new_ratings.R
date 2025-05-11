@@ -1,4 +1,4 @@
-#' Experimental Function to Generate Typicality Ratings via Hugging Face
+#' Generate typicality ratings via Hugging Face (experimental)
 #'
 #' @description
 #' This function uses the Hugging Face Inference API (or a compatible endpoint)
