@@ -65,8 +65,7 @@ base_rate_tbl  <- extract_base_rate_items(gpt4_matrix)
 
 ## More
 
-Full documentation:
-<https://jeremie-beucler.github.io/baserater/reference/index.html>
+Full documentation: <https://jeremie-beucler.github.io/baserater/>
 
 Paper: *Using Large Language Models to Estimate Belief Strength in
 Reasoning* (Beucler et al. - forthcoming)
