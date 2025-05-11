@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Tools for Base-Rate Item Evaluation and LLM Typicality Scoring">
-<meta name="description" content="Tools to download typicality rating datasets, generate new stereotype-based ratings using large language models (LLMs) via the Hugging Face API, and evaluate them against human-annotated validation data. Also includes method to extract base-rate database from typicality matrices.">
-<meta property="og:description" content="Tools to download typicality rating datasets, generate new stereotype-based ratings using large language models (LLMs) via the Hugging Face API, and evaluate them against human-annotated validation data. Also includes method to extract base-rate database from typicality matrices.">
+<meta name="description" content="Tools to download typicality rating datasets, generate new stereotype-based ratings using large language models (LLMs) via the Hugging Face API, and evaluate them against human-annotated validation data. Also includes functions to extract stereotype strength and base-rate items from typicality matrices.">
+<meta property="og:description" content="Tools to download typicality rating datasets, generate new stereotype-based ratings using large language models (LLMs) via the Hugging Face API, and evaluate them against human-annotated validation data. Also includes functions to extract stereotype strength and base-rate items from typicality matrices.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -51,8 +51,75 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9">
-Tools to download typicality rating datasets, generate new stereotype-based ratings using large language models (LLMs) via the Hugging Face API, and evaluate them against human-annotated validation data. Also includes method to extract base-rate database from typicality matrices.
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header"><h1 id="introduction-to-the-baserater-package">Introduction to the baserater package<a class="anchor" aria-label="anchor" href="#introduction-to-the-baserater-package"></a>
+</h1></div>
+<p>The <code>baserater</code> package allows to: - Download LLM‑generated stereotype datasets and human validation ratings from the original paper - Generate new typicality scores with any Hugging Face model - Benchmark new scores against human ground truth and strong LLM baselines - Build base‑rate stereotype tables from typicality matrices</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"Jeremie-Beucler/baserater"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="download-data">Download data<a class="anchor" aria-label="anchor" href="#download-data"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.3.3</span></span>
+<span><span class="co">#&gt; Warning: package 'purrr' was built under R version 4.3.3</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jeremie-beucler.github.io/baserater/">baserater</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">database</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"database"</span><span class="op">)</span>             <span class="co"># full base‑rate set</span></span>
+<span><span class="va">ratings</span>   <span class="op">&lt;-</span> <span class="fu"><a href="reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"validation_ratings"</span><span class="op">)</span>  <span class="co"># 100 human‑rated items</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="generate-scores-with-an-llm">Generate scores with an LLM<a class="anchor" aria-label="anchor" href="#generate-scores-with-an-llm"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">new_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/hf_typicality.html">hf_typicality</a></span><span class="op">(</span></span>
+<span>  groups       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nurse"</span>, <span class="st">"clown"</span><span class="op">)</span>,</span>
+<span>  descriptions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"caring"</span>, <span class="st">"funny"</span><span class="op">)</span>,</span>
+<span>  model        <span class="op">=</span> <span class="st">"meta-llama/Llama-3.1-8B-Instruct"</span>,</span>
+<span>  hf_token     <span class="op">=</span> <span class="st">"your_token_here"</span>,</span>
+<span>  n            <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  min_valid    <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  matrix       <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="evaluate-model-predictions">Evaluate model predictions<a class="anchor" aria-label="anchor" href="#evaluate-model-predictions"></a>
+</h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">new_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"new_typicality_scores_llama3.1_8B.rds"</span>, package <span class="op">=</span> <span class="st">"baserater"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">new_scores</span> <span class="op">&lt;-</span> <span class="va">new_scores</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>adjective <span class="op">=</span> <span class="va">description</span>,</span>
+<span>         rating <span class="op">=</span> <span class="va">mean_score</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">group</span>, <span class="va">adjective</span>, <span class="va">rating</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/evaluate_external_ratings.html">evaluate_external_ratings</a></span><span class="op">(</span><span class="va">new_scores</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="build-a-base-rate-item-dataset">Build a base-rate item dataset<a class="anchor" aria-label="anchor" href="#build-a-base-rate-item-dataset"></a>
+</h2>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gpt4_matrix</span>    <span class="op">&lt;-</span> <span class="fu"><a href="reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"similarity_matrix_gpt4"</span><span class="op">)</span></span>
+<span><span class="va">base_rate_tbl</span>  <span class="op">&lt;-</span> <span class="fu"><a href="reference/extract_base_rate_items.html">extract_base_rate_items</a></span><span class="op">(</span><span class="va">gpt4_matrix</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="more">More<a class="anchor" aria-label="anchor" href="#more"></a>
+</h2>
+<p>Full documentation: <a href="https://jeremie-beucler.github.io/baserater/" class="uri">https://jeremie-beucler.github.io/baserater/</a></p>
+<p>Forthcoming paper: <em>Using Large Language Models to Estimate Belief Strength in Reasoning</em> (Beucler et al.)</p>
+</div>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
+<p>GPL-3</p>
+</div>
+</div>
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
