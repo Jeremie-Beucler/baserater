@@ -14,6 +14,8 @@ The `baserater` package allows to:
 - Benchmark new scores against human ground truth, and compare performance against strong LLM baselines.  
 - Build base‑rate items database from typicality matrices.
 
+It is designed to streamline the creation of base-rate neglect items for reasoning experiments. You can use it to generate new typicality ratings with any LLM on the Hugging Face platform using your own prompts and parameters, benchmark these ratings against human data, and construct a base-rate item dataset from the generated scores.
+
 To learn more about the theoretical framework and studies underlying the baserater package, see the paper: *Using Large Language Models to Estimate Belief Strength in Reasoning* (Beucler et al., forthcoming).
 
 ```{r, include = FALSE}
