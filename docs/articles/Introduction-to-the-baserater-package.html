@@ -387,17 +387,47 @@ human ratings visually:</p>
 and display comparisons with our LLMs baseline:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Print correlation summary with human ground truth and baselines</span></span>
-<span><span class="fu"><a href="../reference/evaluate_external_ratings.html">evaluate_external_ratings</a></span><span class="op">(</span><span class="va">new_scores</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Optionally store the output in a variable</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluate_external_ratings.html">evaluate_external_ratings</a></span><span class="op">(</span><span class="va">new_scores</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/evaluate_external_ratings.html">evaluate_external_ratings</a></span><span class="op">(</span><span class="va">new_scores</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
 <span><span class="co">#&gt;   model                  r        p</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> external           0.505 8.47<span style="color: #949494;">e</span><span style="color: #BB0000;">- 8</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mean_gpt4_rating   0.885 2.83<span style="color: #949494;">e</span><span style="color: #BB0000;">-34</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> mean_llama3_rating 0.818 2.85<span style="color: #949494;">e</span><span style="color: #BB0000;">-25</span></span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Optionally store the output in a variable</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluate_external_ratings.html">evaluate_external_ratings</a></span><span class="op">(</span><span class="va">new_scores</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: 'xfun::attr()' is deprecated.</span></span>
+<span><span class="co">#&gt; Use 'xfun::attr2()' instead.</span></span>
+<span><span class="co">#&gt; See help("Deprecated")</span></span>
+<span><span class="co">#&gt; Warning: 'xfun::attr()' is deprecated.</span></span>
+<span><span class="co">#&gt; Use 'xfun::attr2()' instead.</span></span>
+<span><span class="co">#&gt; See help("Deprecated")</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">model</th>
+<th align="right">r</th>
+<th align="right">p</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">external</td>
+<td align="right">0.5049062</td>
+<td align="right">1e-07</td>
+</tr>
+<tr class="even">
+<td align="left">mean_gpt4_rating</td>
+<td align="right">0.8848219</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="odd">
+<td align="left">mean_llama3_rating</td>
+<td align="right">0.8179981</td>
+<td align="right">0e+00</td>
+</tr>
+</tbody>
+</table>
 <p>As you can see, the smaller and older Llama-3.1-8B-Instruct does not
 perform as our baseline models (GPT-4 and LLaMA 3.3-70B).</p>
 </div>
@@ -411,7 +441,7 @@ correspond to descriptions (e.g., adjectives). Each cell represents how
 typical a description is for a group.</p>
 <p>For example, you can load the GPT-4 typicality matrix using
 download_data() (the same is available for LLaMA 3.3):</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' The typicality matrix from GPT-4 is a data frame with group–adjective pairs and their typicality scores</span></span>
 <span><span class="va">gpt4_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"typicality_matrix_gpt4"</span><span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gpt4_matrix</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -972,12 +1002,12 @@ download_data() (the same is available for LLaMA 3.3):</p>
 </tbody>
 </table>
 <p>Extract base-rate items by applying the function:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Extract base-rate items from the typicality matrix</span></span>
 <span><span class="va">base_rate_items</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_base_rate_items.html">extract_base_rate_items</a></span><span class="op">(</span><span class="va">gpt4_matrix</span><span class="op">)</span></span></code></pre></div>
 <p>You can then explore or filter the output, e.g., to view the
 strongest stereotypes:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># View top base-rate items by stereotype strength</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">base_rate_items</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">StereotypeStrength</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -1085,7 +1115,7 @@ strongest stereotypes:</p>
 <p>You can also subset the database to focus on a specific adjective or
 group. For example, you can visualize the stereotype strength of the
 adjective “selfish” across group combinations:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pick one adjective and extract group typicality scores</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">gpt4_matrix</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">selfish</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -1149,7 +1179,7 @@ adjective “selfish” across group combinations:</p>
 <span>    axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
 <span>    panel.grid  <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="Introduction-to-the-baserater-package_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p><img src="Introduction-to-the-baserater-package_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 </div>
   </div>
 

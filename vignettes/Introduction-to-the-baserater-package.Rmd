@@ -163,6 +163,7 @@ You can then assess how well a new model or scoring method captures group–adje
 
 To do that, you need  typicality ratings for the 100 validation items stored in a data frame with three columns: group, adjective, and rating. We will use the `new_scores` data frame we generated earlier.
 
+
 ```{r, warning = FALSE}
 # Create a data frame with the same structure as the validation set
 new_scores = new_scores %>% 
@@ -173,7 +174,9 @@ new_scores = new_scores %>%
 knitr::kable(head(new_scores))
 ```
 
+
 First, let’s examine the correlation between the new scores and the human ratings visually:
+
 
 ```{r}
 # Join human and model scores
@@ -195,18 +198,25 @@ ggplot(comparison_df, aes(x = rating, y = human)) +
   theme_classic()
 ```
 
+
 Use `evaluate_external_ratings()` to compute correlations and display comparisons with our LLMs baseline:
+
 
 ```{r}
 # Print correlation summary with human ground truth and baselines
-evaluate_external_ratings(new_scores)
-
-# Optionally store the output in a variable
-results <- evaluate_external_ratings(new_scores)
-print(results)
+print(evaluate_external_ratings(new_scores))
 ```
 
+
+```{r}
+# Optionally store the output in a variable
+results <- evaluate_external_ratings(new_scores)
+knitr::kable(results)
+```
+
+
 As you can see, the smaller and older Llama-3.1-8B-Instruct does not perform as our baseline models (GPT-4 and LLaMA 3.3-70B).
+
 
 # 4. Constructing Base-Rate Items from Typicality Matrices
 
