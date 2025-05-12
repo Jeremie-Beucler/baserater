@@ -10,13 +10,9 @@ The `baserater` package allows to:
   performance against strong LLM baselines.  
 - Build base‑rate items database from typicality matrices.
 
-To learn more about the theoretical framework, modeling rationale, and
-validation studies underlying the baserater package, see our forthcoming
-paper:
-
-**Using Large Language Models to Estimate Belief Strength in
-Reasoning**  
-(Beucler et al., forthcoming)
+To learn more about the theoretical framework and studies underlying the
+baserater package, see the paper: *Using Large Language Models to
+Estimate Belief Strength in Reasoning* (Beucler et al., forthcoming).
 
 ## Installation
 
@@ -75,8 +71,8 @@ base_rate_tbl  <- extract_base_rate_items(gpt4_matrix)
 
 Full documentation: <https://jeremie-beucler.github.io/baserater/>
 
-Paper: *Using Large Language Models to Estimate Belief Strength in
-Reasoning* (Beucler et al., forthcoming)
+Original paper: *Using Large Language Models to Estimate Belief Strength
+in Reasoning* (Beucler et al., forthcoming).
 
 ## License
 
