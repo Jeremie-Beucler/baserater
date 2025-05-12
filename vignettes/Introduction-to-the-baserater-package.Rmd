@@ -52,7 +52,7 @@ llama3_3_matrix <- download_data("typicality_matrix_llama3.3")
 ```
 
 
-# 2. Generating New Typicality Ratings from LLMs (Experimental)
+# 2. Generating New Typicality Ratings from LLMs
 
 You can generate new typicality ratings using a Hugging Face-hosted language model via `hf_typicality()`. Note that this is an experimental feature, as it depends on API availability, and model compatibility.
 
@@ -66,9 +66,10 @@ new_scores <- readRDS(system.file("extdata", "new_typicality_scores_llama3.1_8B.
 ```
 
 If you’d like to generate new scores yourself, you’ll need:
-- a valid Hugging Face API token (use `Sys.setenv(HF_API_TOKEN = "your_token")` or pass directly);
-- to accept the terms of use for the model on Hugging Face (when necessary);
-- to ensure that your prompt matches the formatting expectations of the model you’re using (e.g., special tags, instruction tokens, etc.).
+
+- a valid Hugging Face API token (use `Sys.setenv(HF_API_TOKEN = "your_token")` or pass directly);  
+- to accept the terms of use for the model on Hugging Face (when necessary);  
+- to ensure that your prompt matches the formatting expectations of the model you’re using (e.g., special tags, instruction tokens, etc.).  
 
 Here is an example of how the function call might look:
 
@@ -118,9 +119,9 @@ new_scores <- hf_typicality(
   hf_token              = hf_token,
   system_prompt         = llama3_system_prompt,
   user_prompt_template  = llama3_user_prompt_template,
-  n                     = 3,
-  min_valid             = 2,
-  max_tokens            = 3,
+  n                     = 3, # number of responses to generate
+  min_valid             = 2, # minimum number of valid responses, we take the average
+  max_tokens            = 3, # for numeric output between 0 and 100
   retries               = 1,
   matrix                = FALSE,
   return_raw_scores     = TRUE,
@@ -129,7 +130,7 @@ new_scores <- hf_typicality(
 )
 ```
 
-Here is what the output would look like. Note that we also get the error messages from the Hugging Face API since we set `return_full_responses` to  `TRUE`.
+Here is what the output would look like. Note that we also get the occasional error messages from the Hugging Face API since we set `return_full_responses` to  `TRUE`.
 
 ```{r, warning = FALSE}
 knitr::kable(head(new_scores))
@@ -150,8 +151,9 @@ ggplot(new_scores, aes(x = mean_score)) +
 ```
 
 The `hf_typicality()` function supports two modes:
-- `matrix = TRUE` (default): Computes a cross-product of unique groups and descriptions. Returns a list with matrices of scores and responses.
-- `matrix = FALSE`: Computes row-by-row scores for the group–adjective pairs you supply. Returns a tibble.
+
+- `matrix = TRUE` (default): Computes a cross-product of unique groups and descriptions. Returns a list with matrices of scores and responses.  
+- `matrix = FALSE`: Computes row-by-row scores for the group–adjective pairs you supply. Returns a tibble.  
 
 See `?hf_typicality` for full documentation and customization options.
 
