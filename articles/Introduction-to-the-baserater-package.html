@@ -93,6 +93,11 @@ against baseline models;<br>
 <li>Automatically construct a new base-rate item database from a
 group–description typicality matrix.</li>
 </ul>
+<p>It is designed to streamline the creation of base-rate neglect items
+for reasoning experiments. You can use it to generate new typicality
+ratings with any LLM on the Hugging Face platform using your own prompts
+and parameters, benchmark these ratings against human data, and
+construct a base-rate item dataset from the generated scores.</p>
 <p>To learn more about the theoretical framework and validation studies
 underlying the <code>baserater</code> package, see the paper: <em>Using
 Large Language Models to Estimate Belief Strength in Reasoning</em>
@@ -386,17 +391,7 @@ human ratings visually:</p>
 and display comparisons with our LLMs baseline:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Print correlation summary with human ground truth and baselines</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/evaluate_external_ratings.html">evaluate_external_ratings</a></span><span class="op">(</span><span class="va">new_scores</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
-<span><span class="co">#&gt;   model                  r        p</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> external           0.505 8.47<span style="color: #949494;">e</span><span style="color: #BB0000;">- 8</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> mean_gpt4_rating   0.885 2.83<span style="color: #949494;">e</span><span style="color: #BB0000;">-34</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> mean_llama3_rating 0.818 2.85<span style="color: #949494;">e</span><span style="color: #BB0000;">-25</span></span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Optionally store the output in a variable</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluate_external_ratings.html">evaluate_external_ratings</a></span><span class="op">(</span><span class="va">new_scores</span><span class="op">)</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="../reference/evaluate_external_ratings.html">evaluate_external_ratings</a></span><span class="op">(</span><span class="va">new_scores</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">model</th>
@@ -421,6 +416,9 @@ and display comparisons with our LLMs baseline:</p>
 </tr>
 </tbody>
 </table>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Optionally store the output in a variable</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluate_external_ratings.html">evaluate_external_ratings</a></span><span class="op">(</span><span class="va">new_scores</span><span class="op">)</span></span></code></pre></div>
 <p>As you can see, the smaller and older Llama-3.1-8B-Instruct does not
 perform as our baseline models (GPT-4 and LLaMA 3.3-70B).</p>
 </div>
@@ -1172,7 +1170,7 @@ adjective “selfish” across group combinations:</p>
 <span>    axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
 <span>    panel.grid  <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="Introduction-to-the-baserater-package_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p><img src="Introduction-to-the-baserater-package_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 </div>
   </div>
 
