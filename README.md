@@ -49,14 +49,6 @@ new_scores <- hf_typicality(
 ## Evaluate model predictions
 
 ``` r
-# load new precomputed new scores
-new_scores <- readRDS(system.file("extdata", "new_typicality_scores_llama3.1_8B.rds", package = "baserater"))
-
-new_scores <- new_scores %>% 
-  mutate(adjective = description,
-         rating = mean_score) %>%
-  select(group, adjective, rating)
-
 evaluate_external_ratings(new_scores)
 ```
 
