@@ -14,9 +14,9 @@ To learn more about the theoretical framework, modeling rationale, and
 validation studies underlying the baserater package, see our forthcoming
 paper:
 
-**Using Large Language Models to Estimate Belief Strength in Reasoning**
-*Jérémie Beucler, Zoe Purcell, Lucie Charles, and Wim De Neys* (Preprint
-link)
+**Using Large Language Models to Estimate Belief Strength in
+Reasoning**  
+(Beucler et al., forthcoming)
 
 ## Installation
 
@@ -76,7 +76,7 @@ base_rate_tbl  <- extract_base_rate_items(gpt4_matrix)
 Full documentation: <https://jeremie-beucler.github.io/baserater/>
 
 Paper: *Using Large Language Models to Estimate Belief Strength in
-Reasoning* (Beucler et al. - forthcoming)
+Reasoning* (Beucler et al., forthcoming)
 
 ## License
 
