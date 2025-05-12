@@ -204,16 +204,10 @@ Use `evaluate_external_ratings()` to compute correlations and display comparison
 
 ```{r}
 # Print correlation summary with human ground truth and baselines
-print(evaluate_external_ratings(new_scores))
-```
-
-
-```{r}
+knitr::kable(evaluate_external_ratings(new_scores))
 # Optionally store the output in a variable
 results <- evaluate_external_ratings(new_scores)
-knitr::kable(results)
 ```
-
 
 As you can see, the smaller and older Llama-3.1-8B-Instruct does not perform as our baseline models (GPT-4 and LLaMA 3.3-70B).
 
