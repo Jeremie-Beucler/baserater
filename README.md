@@ -28,6 +28,14 @@ pak::pak("Jeremie-Beucler/baserater")
 
 ## Download data
 
+``` r
+library(tidyverse)
+library(baserater)
+
+database <- download_data("database")             # full base‑rate item database
+ratings   <- download_data("validation_ratings")  # 100 human‑rated items
+```
+
 ## Generate scores with an LLM
 
 ``` r
@@ -59,7 +67,7 @@ evaluate_external_ratings(new_scores)
 ## Build a base-rate item dataset
 
 ``` r
-gpt4_matrix    <- download_data("similarity_matrix_gpt4")
+gpt4_matrix    <- download_data("typicality_matrix_gpt4")
 base_rate_tbl  <- extract_base_rate_items(gpt4_matrix)
 ```
 

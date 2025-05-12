@@ -97,11 +97,17 @@
 <div class="section level2">
 <h2 id="download-data">Download data<a class="anchor" aria-label="anchor" href="#download-data"></a>
 </h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jeremie-beucler.github.io/baserater/" class="external-link">baserater</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">database</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"database"</span><span class="op">)</span>             <span class="co"># full base‑rate item database</span></span>
+<span><span class="va">ratings</span>   <span class="op">&lt;-</span> <span class="fu"><a href="reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"validation_ratings"</span><span class="op">)</span>  <span class="co"># 100 human‑rated items</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="generate-scores-with-an-llm">Generate scores with an LLM<a class="anchor" aria-label="anchor" href="#generate-scores-with-an-llm"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/hf_typicality.html">hf_typicality</a></span><span class="op">(</span></span>
 <span>  groups       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nurse"</span>, <span class="st">"clown"</span><span class="op">)</span>,</span>
 <span>  descriptions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"caring"</span>, <span class="st">"funny"</span><span class="op">)</span>,</span>
@@ -115,22 +121,22 @@
 <div class="section level2">
 <h2 id="evaluate-model-predictions">Evaluate model predictions<a class="anchor" aria-label="anchor" href="#evaluate-model-predictions"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># load new precomputed new scores</span></span>
 <span><span class="va">new_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"new_typicality_scores_llama3.1_8B.rds"</span>, package <span class="op">=</span> <span class="st">"baserater"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">new_scores</span> <span class="op">&lt;-</span> <span class="va">new_scores</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>adjective <span class="op">=</span> <span class="va">description</span>,</span>
-<span>         rating <span class="op">=</span> <span class="va">mean_score</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">group</span>, <span class="va">adjective</span>, <span class="va">rating</span><span class="op">)</span></span>
+<span><span class="va">new_scores</span> <span class="op">&lt;-</span> <span class="va">new_scores</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>adjective <span class="op">=</span> <span class="va">description</span>,</span>
+<span>         rating <span class="op">=</span> <span class="va">mean_score</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">group</span>, <span class="va">adjective</span>, <span class="va">rating</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/evaluate_external_ratings.html">evaluate_external_ratings</a></span><span class="op">(</span><span class="va">new_scores</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="build-a-base-rate-item-dataset">Build a base-rate item dataset<a class="anchor" aria-label="anchor" href="#build-a-base-rate-item-dataset"></a>
 </h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gpt4_matrix</span>    <span class="op">&lt;-</span> <span class="fu"><a href="reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"similarity_matrix_gpt4"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gpt4_matrix</span>    <span class="op">&lt;-</span> <span class="fu"><a href="reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"typicality_matrix_gpt4"</span><span class="op">)</span></span>
 <span><span class="va">base_rate_tbl</span>  <span class="op">&lt;-</span> <span class="fu"><a href="reference/extract_base_rate_items.html">extract_base_rate_items</a></span><span class="op">(</span><span class="va">gpt4_matrix</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
