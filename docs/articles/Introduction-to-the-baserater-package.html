@@ -120,8 +120,8 @@ base-rate item database.</p>
 <span><span class="va">ratings</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"validation_ratings"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load the typicality matrices</span></span>
-<span><span class="va">gpt4_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"similarity_matrix_gpt4"</span><span class="op">)</span></span>
-<span><span class="va">llama3_3_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"similarity_matrix_llama3.3"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">gpt4_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"typicality_matrix_gpt4"</span><span class="op">)</span></span>
+<span><span class="va">llama3_3_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"typicality_matrix_llama3.3"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="generating-new-typicality-ratings-from-llms-experimental">2. Generating New Typicality Ratings from LLMs (Experimental)<a class="anchor" aria-label="anchor" href="#generating-new-typicality-ratings-from-llms-experimental"></a>
@@ -279,6 +279,7 @@ typical a description is for a group.</p>
 download_data() (the same is available for LLaMA 3.3):</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' The typicality matrix from GPT-4 is a data frame with group–adjective pairs and their typicality scores</span></span>
+<span><span class="va">gpt4_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/download_data.html">download_data</a></span><span class="op">(</span><span class="st">"typicality_matrix_gpt4"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gpt4_matrix</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 67</span></span></span>
 <span><span class="co">#&gt;   X      intelligent arrogant nerdy  kind  loud careful argumentative persuasive</span></span>

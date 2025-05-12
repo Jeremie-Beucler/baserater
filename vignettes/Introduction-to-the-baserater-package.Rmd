@@ -50,8 +50,8 @@ database <- download_data("database")
 ratings <- download_data("validation_ratings")
 
 # Load the typicality matrices
-gpt4_matrix <- download_data("similarity_matrix_gpt4")
-llama3_3_matrix <- download_data("similarity_matrix_llama3.3")
+gpt4_matrix <- download_data("typicality_matrix_gpt4")
+llama3_3_matrix <- download_data("typicality_matrix_llama3.3")
 ```
 
 
@@ -177,6 +177,7 @@ For example, you can load the GPT-4 typicality matrix using download_data() (the
 
 ```{r}
 #' The typicality matrix from GPT-4 is a data frame with group–adjective pairs and their typicality scores
+gpt4_matrix <- download_data("typicality_matrix_gpt4")
 head(gpt4_matrix)
 ```
 

@@ -38,7 +38,7 @@ pak::pak("Jeremie-Beucler/baserater")
 
 ## Download data
 
-```{r, warning = FALSE, message = FALSE, echo = FALSE}
+```{r, warning = FALSE, message = FALSE}
 library(tidyverse)
 library(baserater)
 
@@ -77,7 +77,7 @@ evaluate_external_ratings(new_scores)
 ## Build a base-rate item dataset
 
 ```{r}
-gpt4_matrix    <- download_data("similarity_matrix_gpt4")
+gpt4_matrix    <- download_data("typicality_matrix_gpt4")
 base_rate_tbl  <- extract_base_rate_items(gpt4_matrix)
 ```
 
