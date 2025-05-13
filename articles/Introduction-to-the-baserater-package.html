@@ -133,37 +133,15 @@ base-rate item database.</p>
 </h2>
 <p>You can generate new typicality ratings using a Hugging Face-hosted
 language model via <code><a href="../reference/generate_typicality.html">generate_typicality()</a></code>. Note that this is
-an experimental feature, as it depends on API availability, and model
-compatibility.</p>
+an experimental feature, as it depends on API and model compatibility.
+See the <a href="#hugging-face-resources">Hugging Face Resources</a>
+section at the end of this vignette for more information on how to set
+up your Hugging Face account and API token.</p>
 <p>The function works by sending structured prompts to a large language
 model and parsing numeric outputs (between 0 and 100) that reflect how
 well a description (e.g., an adjective) fits a given group. By default,
 the function uses the same prompt and generation parameters described in
 the paper.</p>
-<p>To ensure reproducibility, we include a precomputed result obtained
-using the model Llama-3.1-8B-Instruct, a smaller and older version of
-Llama-3.3-70B-Instruct available on Hugging Face:</p>
-<p>If you’d like to generate new scores yourself, make sure you’ve
-completed the following setup steps:</p>
-<ul>
-<li><p><strong>Create a Hugging Face account and generate an API
-token</strong>:<br>
-Visit <a href="https://huggingface.co/settings/tokens" class="external-link">https://huggingface.co/settings/tokens</a>
-to create your token.<br>
-You can either pass it directly to the <code>hf_token</code> argument,
-or store it as an environment variable in R (e.g., use
-<code>Sys.setenv(HF_API_TOKEN = "your_token")</code>).</p></li>
-<li><p><strong>Accept the model’s terms of use</strong> (if
-required):<br>
-Before using certain models (e.g., LLaMA), you must agree to their
-license terms on the <a href="https://huggingface.co/models" class="external-link">Hugging
-Face Model Hub</a>.</p></li>
-<li><p><strong>Ensure your prompt matches the model’s expected input
-format</strong>:<br>
-Some models require special formatting, such as instruction tags or
-system prompts. Check the model card on Hugging Face for
-details.</p></li>
-</ul>
 <p>Here is an example of how the function call might look:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Original prompt from the paper</span></span>
@@ -1208,6 +1186,23 @@ AWS, Azure, Paperspace) to serve and scale models.<br>
 <a href="https://huggingface.co/models" class="external-link">Hugging Face Model Hub</a> —
 Browse available models (e.g., LLaMA, Mixtral) and view license
 requirements.</li>
+</ul>
+<p>If you’d like to generate new scores yourself using the
+<code><a href="../reference/generate_typicality.html">generate_typicality()</a></code> function, make sure you’ve completed
+the following setup steps:</p>
+<ul>
+<li><p>Create a Hugging Face account and generate an API token:<br>
+You can either pass it directly to the <code>hf_token</code> argument of
+the function, or store it as an environment variable in R (e.g., use
+<code>Sys.setenv(HF_API_TOKEN = "your_token")</code>).</p></li>
+<li><p>Accept the model’s terms of use:<br>
+Before using certain models (e.g., LLaMA), you must agree to their
+license terms on the Hugging Face Model Hub</p></li>
+<li><p>Ensure your prompt matches the model’s expected input
+format:<br>
+Some models require special formatting, such as instruction tags or
+system prompts. Check the model card on Hugging Face for
+details.</p></li>
 </ul>
 </div>
 </div>
