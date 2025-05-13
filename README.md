@@ -41,7 +41,7 @@ ratings   <- download_data("validation_ratings")  # 100 human‑rated items
 ## Generate scores with an LLM
 
 ``` r
-new_scores <- hf_typicality(
+new_scores <- generate_typicality(
   groups       = c("nurse", "clown"),
   descriptions = c("caring", "funny"),
   model        = "meta-llama/Llama-3.1-8B-Instruct",
@@ -51,6 +51,10 @@ new_scores <- hf_typicality(
   matrix       = FALSE
 )
 ```
+
+**Note:** To use `generate_typicality()`, you must have a [Hugging
+Face](https://huggingface.co) account and an access token.  
+You can create one [here](https://huggingface.co/settings/tokens).
 
 ## Evaluate model predictions
 
@@ -75,3 +79,25 @@ in Reasoning* (Beucler et al., forthcoming).
 ## License
 
 GPL-3
+
+## Hugging Face Resources
+
+Hugging Face is a platform that provides access to a wide range of
+pre-trained models and datasets for natural language processing (NLP)
+tasks. The `baserater` package uses Hugging Face’s API to generate
+typicality scores with various models. Here are some useful resources to
+get started with Hugging Face:
+
+- [Create a Hugging Face access
+  token](https://huggingface.co/settings/tokens) — Required to
+  authenticate API requests to hosted models.  
+- [Hugging Face Inference
+  Endpoints](https://huggingface.co/docs/inference-endpoints) — Set up
+  and deploy your own scalable model endpoint directly through Hugging
+  Face.  
+- [Hugging Face Inference
+  Providers](https://huggingface.co/docs/inference-providers) — Use
+  third-party infrastructure (e.g., AWS, Azure, Paperspace) to serve and
+  scale models.  
+- [Hugging Face Model Hub](https://huggingface.co/models) — Browse
+  available models (e.g., LLaMA, Mixtral) and view license requirements.

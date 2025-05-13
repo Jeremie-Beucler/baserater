@@ -108,7 +108,7 @@
 <h2 id="generate-scores-with-an-llm">Generate scores with an LLM<a class="anchor" aria-label="anchor" href="#generate-scores-with-an-llm"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">new_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/hf_typicality.html">hf_typicality</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">new_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/generate_typicality.html">generate_typicality</a></span><span class="op">(</span></span>
 <span>  groups       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nurse"</span>, <span class="st">"clown"</span><span class="op">)</span>,</span>
 <span>  descriptions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"caring"</span>, <span class="st">"funny"</span><span class="op">)</span>,</span>
 <span>  model        <span class="op">=</span> <span class="st">"meta-llama/Llama-3.1-8B-Instruct"</span>,</span>
@@ -117,6 +117,8 @@
 <span>  min_valid    <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  matrix       <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p><strong>Note:</strong> To use <code><a href="reference/generate_typicality.html">generate_typicality()</a></code>, you must have a <a href="https://huggingface.co" class="external-link">Hugging Face</a> account and an access token.<br>
+You can create one <a href="https://huggingface.co/settings/tokens" class="external-link">here</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="evaluate-model-predictions">Evaluate model predictions<a class="anchor" aria-label="anchor" href="#evaluate-model-predictions"></a>
@@ -141,6 +143,24 @@
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h2>
 <p>GPL-3</p>
+</div>
+<div class="section level2">
+<h2 id="hugging-face-resources">Hugging Face Resources<a class="anchor" aria-label="anchor" href="#hugging-face-resources"></a>
+</h2>
+<p>Hugging Face is a platform that provides access to a wide range of pre-trained models and datasets for natural language processing (NLP) tasks. The <code>baserater</code> package uses Hugging Face’s API to generate typicality scores with various models. Here are some useful resources to get started with Hugging Face:</p>
+<ul>
+<li>
+<a href="https://huggingface.co/settings/tokens" class="external-link">Create a Hugging Face access token</a> — Required to authenticate API requests to hosted models.<br>
+</li>
+<li>
+<a href="https://huggingface.co/docs/inference-endpoints" class="external-link">Hugging Face Inference Endpoints</a> — Set up and deploy your own scalable model endpoint directly through Hugging Face.<br>
+</li>
+<li>
+<a href="https://huggingface.co/docs/inference-providers" class="external-link">Hugging Face Inference Providers</a> — Use third-party infrastructure (e.g., AWS, Azure, Paperspace) to serve and scale models.<br>
+</li>
+<li>
+<a href="https://huggingface.co/models" class="external-link">Hugging Face Model Hub</a> — Browse available models (e.g., LLaMA, Mixtral) and view license requirements.</li>
+</ul>
 </div>
 </div>
   </div>
