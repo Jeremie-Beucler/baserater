@@ -1,4 +1,4 @@
-Getting started with the baserater package
+baserater package
 ================
 
 The `baserater` package allows to:

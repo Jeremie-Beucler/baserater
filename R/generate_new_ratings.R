@@ -4,7 +4,7 @@
 #' This function uses the Hugging Face Inference API (or a compatible endpoint)
 #' to generate typicality ratings by querying a large language model (LLM).
 #'
-#' **Important:** This function will only work if:
+#' **Important:** Before running this function, please ensure that:
 #' - You have a valid Hugging Face API token (via `hf_token` or the `HF_API_TOKEN` environment variable);
 #' - You have a valid Hugging Face access token and have accepted the model’s license on the Hub;
 #' - The specified model is available and accessible via the Hugging Face API or your own hosted inference endpoint;

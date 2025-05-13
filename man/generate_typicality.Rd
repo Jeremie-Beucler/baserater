@@ -78,7 +78,7 @@ Paired mode (\code{matrix = FALSE}) -> a tibble with columns for \code{group}, \
 This function uses the Hugging Face Inference API (or a compatible endpoint)
 to generate typicality ratings by querying a large language model (LLM).
 
-\strong{Important:} This function will only work if:
+\strong{Important:} Before running this function, please ensure that:
 \itemize{
 \item You have a valid Hugging Face API token (via \code{hf_token} or the \code{HF_API_TOKEN} environment variable);
 \item You have a valid Hugging Face access token and have accepted the model’s license on the Hub;

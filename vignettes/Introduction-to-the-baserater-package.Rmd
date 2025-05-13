@@ -26,6 +26,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+# 0. Setup
+
 ```{r setup, warning = FALSE, message = FALSE}
 library(baserater)
 library(tidyverse)
@@ -126,7 +128,7 @@ new_scores <- generate_typicality(
 )
 ```
 
-Here is what the output would look like. Note that we also get the occasional error messages from the Hugging Face API since we set `return_full_responses` to  `TRUE`.
+Here is what the output looks like. Note that we also see the occasional error messages from the Hugging Face API (e.g., too many requests) since we set `return_full_responses` to  `TRUE`.
 
 ```{r, warning = FALSE}
 knitr::kable(head(new_scores))
