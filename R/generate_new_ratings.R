@@ -15,7 +15,7 @@
 #'
 #' # Get Typicality Ratings from Hugging Face Models
 #'
-#' **hf_typicality()** sends structured prompts to any text-generation model
+#' **generate_typicality()** sends structured prompts to any text-generation model
 #' hosted on the Hugging Face Inference API (or a self-hosted endpoint) and
 #' collects *numeric* ratings (0–100) of how well a *description* (e.g., an
 #' adjective) fits a *group* (e.g., an occupation). Responses that cannot be
@@ -67,7 +67,7 @@
 #'   supplied).
 #' @param custom_url    Fully-qualified HTTPS URL of a private Inference Endpoint
 #'   or self-hosted TGI server.
-#' @param hf_token      API token (defaults to `Sys.getenv("HF_API_TOKEN")`).
+#' @param hf_token A Hugging Face API token (see \url{https://huggingface.co/settings/tokens}). Defaults to \code{Sys.getenv("HF_API_TOKEN")}.
 #' @param n             Samples requested per retry block (>= 1).
 #' @param min_valid     Minimum numeric scores required per pair.
 #' @param temperature,top_p,max_tokens  Generation controls.
@@ -101,7 +101,7 @@
 #' toy_groups <- c("engineer", "clown", "firefighter")
 #' toy_descriptions <- c("patient", "funny", "fearful")
 #'
-#' toy_result <- hf_typicality(
+#' toy_result <- generate_typicality(
 #'   groups = toy_groups,
 #'   descriptions = toy_descriptions,
 #'   model = "meta-llama/Llama-3-70B-Instruct",
@@ -118,7 +118,7 @@
 #' # --- Full-scale example using the validation ratings ---
 #' # ratings <- download_data("validation_ratings")
 #'
-#' # new_scores <- hf_typicality(
+#' # new_scores <- generate_typicality(
 #' #   groups                = ratings$group,
 #' #   descriptions          = ratings$adjective,
 #' #   model                 = "meta-llama/Llama-3.1-8B-Instruct",
@@ -134,7 +134,7 @@
 #'
 #' # head(new_scores)
 #' }
-hf_typicality <- function(
+generate_typicality <- function(
     groups,
     descriptions,
     model              = "meta-llama/Llama-3-70B-Instruct",
@@ -216,7 +216,7 @@ hf_typicality <- function(
 
   total_pairs <- nrow(processing)
   if (verbose) {
-    message(sprintf("Starting hf_typicality - %d pairs (%d samples per block, min %d valid scores per pair, up to %d retry blocks)",
+    message(sprintf("Starting generate_typicality - %d pairs (%d samples per block, min %d valid scores per pair, up to %d retry blocks)",
                     total_pairs, n, min_valid, retries))
   }
 
