@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Installation
+## Installation
 
 To install the latest development version from GitHub, run:
 
@@ -37,16 +37,16 @@ To install the latest development version from GitHub, run:
 pak::pak("Jeremie-Beucler/baserater")
 ```
 
-# Citation
+## Citation
 
 Please cite the package as:
 
 Beucler, J. (2025). baserater: An R package using large language models to estimate belief strength in reasoning. Github. https://jeremie-beucler.github.io/baserater/
 
 
-# Package overview
+## Package overview
 
-## Download data
+### Download data
 
 ```{r, warning = FALSE, message = FALSE}
 library(tidyverse)
@@ -56,7 +56,7 @@ database <- download_data("database")             # full base‑rate item databa
 ratings   <- download_data("validation_ratings")  # 100 human‑rated items
 ```
 
-## Generate scores with an LLM
+### Generate scores with an LLM
 
 ```{r}
 new_scores <- generate_typicality(
@@ -73,7 +73,7 @@ new_scores <- generate_typicality(
 **Note:** To use `generate_typicality()`, you must have a [Hugging Face](https://huggingface.co) account and an access token.  
 You can create one [here](https://huggingface.co/settings/tokens).
 
-## Evaluate model predictions
+### Evaluate model predictions
 
 ```{r, message=FALSE, warning = FALSE, echo=FALSE}
 # load new precomputed new scores
@@ -89,7 +89,7 @@ new_scores <- new_scores %>%
 evaluate_external_ratings(new_scores)
 ```
 
-## Build a base-rate item dataset
+### Build a base-rate item dataset
 
 ```{r}
 gpt4_matrix    <- download_data("typicality_matrix_gpt4")

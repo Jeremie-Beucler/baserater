@@ -23,7 +23,7 @@ To learn more about the theoretical framework and studies underlying the
 baserater package, see the paper: *Using Large Language Models to
 Estimate Belief Strength in Reasoning* (Beucler et al., forthcoming).
 
-# Installation
+## Installation
 
 To install the latest development version from GitHub, run:
 
@@ -32,7 +32,7 @@ To install the latest development version from GitHub, run:
 pak::pak("Jeremie-Beucler/baserater")
 ```
 
-# Citation
+## Citation
 
 Please cite the package as:
 
@@ -40,9 +40,9 @@ Beucler, J. (2025). baserater: An R package using large language models
 to estimate belief strength in reasoning. Github.
 <https://jeremie-beucler.github.io/baserater/>
 
-# Package overview
+## Package overview
 
-## Download data
+### Download data
 
 ``` r
 library(tidyverse)
@@ -52,7 +52,7 @@ database <- download_data("database")             # full base‑rate item databa
 ratings   <- download_data("validation_ratings")  # 100 human‑rated items
 ```
 
-## Generate scores with an LLM
+### Generate scores with an LLM
 
 ``` r
 new_scores <- generate_typicality(
@@ -70,13 +70,13 @@ new_scores <- generate_typicality(
 Face](https://huggingface.co) account and an access token.  
 You can create one [here](https://huggingface.co/settings/tokens).
 
-## Evaluate model predictions
+### Evaluate model predictions
 
 ``` r
 evaluate_external_ratings(new_scores)
 ```
 
-## Build a base-rate item dataset
+### Build a base-rate item dataset
 
 ``` r
 gpt4_matrix    <- download_data("typicality_matrix_gpt4")
