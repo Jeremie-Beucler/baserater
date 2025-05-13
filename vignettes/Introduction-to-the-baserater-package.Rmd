@@ -319,7 +319,7 @@ If you'd like to generate new scores yourself using the `generate_typicality()` 
   You can either pass it directly to the `hf_token` argument of the function, or store it as an environment variable in R (e.g., use `Sys.setenv(HF_API_TOKEN = "your_token")`).
   
 - Accept the model's terms of use:  
-  Before using certain models (e.g., LLaMA), you must agree to their license terms on the Hugging Face Model Hub
+  Before using certain models (e.g., LLaMA), you must agree to their license terms on the Hugging Face Model Hub.
   
 - Ensure your prompt matches the model's expected input format:  
   Some models require special formatting, such as instruction tags or system prompts. Check the model card on Hugging Face for details.

@@ -71,6 +71,7 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
 <div class="section level1">
 <div class="page-header"><h1 id="getting-started-with-the-baserater-package">Getting started with the baserater package<a class="anchor" aria-label="anchor" href="#getting-started-with-the-baserater-package"></a>
 </h1></div>
@@ -85,15 +86,26 @@
 <li>Build base‑rate items database from typicality matrices.</li>
 </ul>
 <p>It is designed to streamline the creation of base-rate neglect items for reasoning experiments. You can use it to generate new typicality ratings with any LLM on the Hugging Face platform using your own prompts and parameters, benchmark these ratings against human data, and construct a base-rate item dataset from the generated scores.</p>
+<p>The full documentation along with a tutorial is available at: <a href="https://jeremie-beucler.github.io/baserater/" class="external-link uri">https://jeremie-beucler.github.io/baserater/</a></p>
 <p>To learn more about the theoretical framework and studies underlying the baserater package, see the paper: <em>Using Large Language Models to Estimate Belief Strength in Reasoning</em> (Beucler et al., forthcoming).</p>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
+</div>
+<div class="section level1">
+<h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h1>
+<p>To install the latest development version from GitHub, run:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># development version</span></span>
-<span><span class="co"># install.packages("pak")</span></span>
+<code class="sourceCode R"><span><span class="co"># install.packages("pak")  # if not yet installed</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"Jeremie-Beucler/baserater"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level1">
+<h1 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h1>
+<p>Please cite the package as:</p>
+<p>Beucler, J. (2025). baserater: An R package using large language models to estimate belief strength in reasoning. Github. <a href="https://jeremie-beucler.github.io/baserater/" class="external-link uri">https://jeremie-beucler.github.io/baserater/</a></p>
+</div>
+<div class="section level1">
+<h1 id="package-overview">Package overview<a class="anchor" aria-label="anchor" href="#package-overview"></a>
+</h1>
 <div class="section level2">
 <h2 id="download-data">Download data<a class="anchor" aria-label="anchor" href="#download-data"></a>
 </h2>
@@ -134,12 +146,6 @@ You can create one <a href="https://huggingface.co/settings/tokens" class="exter
 <span><span class="va">base_rate_tbl</span>  <span class="op">&lt;-</span> <span class="fu"><a href="reference/extract_base_rate_items.html">extract_base_rate_items</a></span><span class="op">(</span><span class="va">gpt4_matrix</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="more">More<a class="anchor" aria-label="anchor" href="#more"></a>
-</h2>
-<p>Full documentation: <a href="https://jeremie-beucler.github.io/baserater/" class="external-link uri">https://jeremie-beucler.github.io/baserater/</a></p>
-<p>Original paper: <em>Using Large Language Models to Estimate Belief Strength in Reasoning</em> (Beucler et al., forthcoming).</p>
-</div>
-<div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h2>
 <p>GPL-3</p>
@@ -163,6 +169,7 @@ You can create one <a href="https://huggingface.co/settings/tokens" class="exter
 </ul>
 </div>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
