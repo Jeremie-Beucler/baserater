@@ -102,10 +102,14 @@ construct a base-rate item dataset from the generated scores.</p>
 underlying the <code>baserater</code> package, see the paper: <em>Using
 Large Language Models to Estimate Belief Strength in Reasoning</em>
 (Beucler et al., Forthcoming).</p>
+<div class="section level2">
+<h2 id="setup">0. Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jeremie-beucler.github.io/baserater/" class="external-link">baserater</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span></code></pre></div>
+</div>
 <div class="section level2">
 <h2 id="downloading-the-data">1. Downloading the Data<a class="anchor" aria-label="anchor" href="#downloading-the-data"></a>
 </h2>
@@ -198,9 +202,10 @@ the paper.</p>
 <span>  return_full_responses <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose               <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Here is what the output would look like. Note that we also get the
-occasional error messages from the Hugging Face API since we set
-<code>return_full_responses</code> to <code>TRUE</code>.</p>
+<p>Here is what the output looks like. Note that we also see the
+occasional error messages from the Hugging Face API (e.g., too many
+requests) since we set <code>return_full_responses</code> to
+<code>TRUE</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">new_scores</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
