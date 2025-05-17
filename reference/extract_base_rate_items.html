@@ -96,6 +96,7 @@ the group names.</p></dd>
     <p>For each pair of groups and each description (e.g., adjective), it identifies which group
 received the higher typicality score. The output includes the names of both groups, their scores,
 and the log-ratio between the higher and lower score.</p>
+<p>It can be quite slow for large matrices, as the number of items becomes very large.</p>
 <p>By construction, the returned <code>Group1</code> always has a higher or equal typicality score
 than <code>Group2</code> for a given description. This ensures that the resulting <code>StereotypeStrength</code>
 (defined as <code>log(Score1 / Score2)</code>) is always <strong>positive or zero</strong>, and represents the strength
