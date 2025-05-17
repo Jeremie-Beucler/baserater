@@ -31,6 +31,8 @@ For each pair of groups and each description (e.g., adjective), it identifies wh
 received the higher typicality score. The output includes the names of both groups, their scores,
 and the log-ratio between the higher and lower score.
 
+It can be quite slow for large matrices, as the number of items becomes very large.
+
 By construction, the returned \code{Group1} always has a higher or equal typicality score
 than \code{Group2} for a given description. This ensures that the resulting \code{StereotypeStrength}
 (defined as \code{log(Score1 / Score2)}) is always \strong{positive or zero}, and represents the strength

@@ -40,7 +40,7 @@ or self-hosted TGI server.}
 
 \item{n}{Samples requested per retry block (>= 1).}
 
-\item{min_valid}{Minimum numeric scores required per pair.}
+\item{min_valid}{Minimum numeric scores required per pair (>= 1).}
 
 \item{temperature, top_p, max_tokens}{Generation controls.}
 
@@ -77,6 +77,8 @@ Paired mode (\code{matrix = FALSE}) -> a tibble with columns for \code{group}, \
 \description{
 This function uses the Hugging Face Inference API (or a compatible endpoint)
 to generate typicality ratings by querying a large language model (LLM).
+It generates one or multiple ratings for each group-description pair and returns the mean score.
+It can be quite slow to run depending on the API.
 
 \strong{Important:} Before running this function, please ensure that:
 \itemize{
@@ -152,7 +154,7 @@ toy_result <- generate_typicality(
   descriptions = toy_descriptions,
   model = "meta-llama/Llama-3-70B-Instruct",
   n = 10,
-  min_valid = 8,
+  min_valid = 8, # at least 8 valid scores per pair, we take the mean of those
   matrix = FALSE,
   return_raw_scores = TRUE,
   return_full_responses = FALSE,

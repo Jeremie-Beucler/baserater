@@ -3,6 +3,8 @@
 #' @description
 #' This function uses the Hugging Face Inference API (or a compatible endpoint)
 #' to generate typicality ratings by querying a large language model (LLM).
+#' It generates one or multiple ratings for each group-description pair and returns the mean score.
+#' It can be quite slow to run depending on the API.
 #'
 #' **Important:** Before running this function, please ensure that:
 #' - You have a valid Hugging Face API token (via `hf_token` or the `HF_API_TOKEN` environment variable);
@@ -69,7 +71,7 @@
 #'   or self-hosted TGI server.
 #' @param hf_token A Hugging Face API token (see \url{https://huggingface.co/settings/tokens}). Defaults to \code{Sys.getenv("HF_API_TOKEN")}.
 #' @param n             Samples requested per retry block (>= 1).
-#' @param min_valid     Minimum numeric scores required per pair.
+#' @param min_valid     Minimum numeric scores required per pair (>= 1).
 #' @param temperature,top_p,max_tokens  Generation controls.
 #' @param retries       Maximum number of *additional* retry blocks.
 #' @param matrix        `TRUE` = cross-product, `FALSE` = paired.
@@ -106,7 +108,7 @@
 #'   descriptions = toy_descriptions,
 #'   model = "meta-llama/Llama-3-70B-Instruct",
 #'   n = 10,
-#'   min_valid = 8,
+#'   min_valid = 8, # at least 8 valid scores per pair, we take the mean of those
 #'   matrix = FALSE,
 #'   return_raw_scores = TRUE,
 #'   return_full_responses = FALSE,

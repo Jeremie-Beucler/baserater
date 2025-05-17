@@ -1,7 +1,6 @@
 pandoc: '3.2'
-pkgdown: 2.0.7
+pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   Introduction-to-the-baserater-package: Introduction-to-the-baserater-package.html
-last_built: 2025-05-13T16:21Z
-
+last_built: 2025-05-17T00:30Z
