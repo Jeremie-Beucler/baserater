@@ -46,8 +46,12 @@ Beucler, J. (2025). baserater: An R package using large language models to estim
 
 ## Package overview
 
+<br>
 
-![*Schematic overview of the baserater package.*](./man/figures/baserater_illustration.png)
+![ ](./man/figures/baserater_illustration.png)
+<br>
+
+*Schematic overview of the `baserater` package.*
 
 ## License
 

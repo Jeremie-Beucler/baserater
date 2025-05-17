@@ -52,12 +52,11 @@ to estimate belief strength in reasoning. Github.
 
 ## Package overview
 
-<figure>
-<img src="./man/figures/baserater_illustration.png"
-alt="Schematic overview of the baserater package." />
-<figcaption aria-hidden="true"><em>Schematic overview of the baserater
-package.</em></figcaption>
-</figure>
+<br>
+
+![](./man/figures/baserater_illustration.png) <br>
+
+*Schematic overview of the `baserater` package.*
 
 ## License
 
