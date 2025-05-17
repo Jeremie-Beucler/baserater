@@ -1,6 +1,6 @@
 Package: baserater
 Title: Tools for Base-Rate Item Evaluation and LLM Typicality Scoring
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person("Jeremie", "Beucler", email = "jeremie.beucler@gmail.com", role = c("aut", "cre"))
 Description: Tools to download typicality rating datasets, generate new 
@@ -8,7 +8,8 @@ Description: Tools to download typicality rating datasets, generate new
     Hugging Face API, and evaluate them against human-annotated validation data. 
     Also includes functions to extract stereotype strength and base-rate items 
     from typicality matrices.
-License: GPL-3
+License: MIT + file LICENSE
+Depends: R (>= 4.1.0)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

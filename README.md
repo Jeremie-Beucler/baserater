@@ -46,9 +46,9 @@ pak::pak("Jeremie-Beucler/baserater")
 
 Please cite the package as:
 
-Beucler, J. (2025). baserater: An R package using large language models
-to estimate belief strength in reasoning. Github.
-<https://jeremie-beucler.github.io/baserater/>
+Beucler, J. (2025). *baserater: An R package using large language models
+to estimate belief strength in reasoning* (Version 0.1.0) \[Computer
+software\]. Zenodo. <https://doi.org/10.5281/zenodo.15449192>
 
 ## Package overview
 
@@ -60,7 +60,7 @@ to estimate belief strength in reasoning. Github.
 
 ## License
 
-GPL-3
+MIT
 
 ## Hugging Face Resources
 

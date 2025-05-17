@@ -316,6 +316,12 @@ ggplot(res_df, aes(x = g2, y = g1, fill = log_ratio)) +
   )
 ```
 
+## Citation
+
+If you use `baserater` in your research, please cite:
+
+Beucler, J. (2025). *baserater: An R package using large language models to estimate belief strength in reasoning* (Version 0.1.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.15449192
+
 ## Hugging Face Resources
 
 Hugging Face is a platform that provides access to a wide range of pre-trained models and datasets for natural language processing (NLP) tasks. The `baserater` package uses Hugging Face's API to generate typicality scores with various models. Here are some useful resources to get started with Hugging Face:

@@ -1,0 +1,9 @@
+bibentry(
+  bibtype = "Manual",
+  title   = "baserater: An R package using large language models to estimate belief strength in reasoning",
+  author  = person("Jeremie", "Beucler"),
+  year    = 2025,
+  note    = "Version 0.1.0. Zenodo archive.",
+  doi     = "10.5281/zenodo.15449192",
+  url     = "https://doi.org/10.5281/zenodo.15449192"
+)
