@@ -58,7 +58,7 @@ to estimate belief strength in reasoning. Github.
 
 ## License
 
-MIT
+GPL-3
 
 ## Hugging Face Resources
 

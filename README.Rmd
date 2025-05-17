@@ -53,7 +53,7 @@ Beucler, J. (2025). baserater: An R package using large language models to estim
 
 ## License
 
-MIT
+GPL-3
 
 ## Hugging Face Resources
 
