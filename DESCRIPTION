@@ -1,10 +1,10 @@
 Package: baserater
-Title: Tools for Base-Rate Item Evaluation and LLM Typicality Scoring
+Title: Tools for Base-Rate Item Evaluation and Typicality Scoring Using Large Language Models
 Version: 0.1.0
 Authors@R: 
     person("Jeremie", "Beucler", email = "jeremie.beucler@gmail.com", role = c("aut", "cre"))
 Description: Tools to download typicality rating datasets, generate new 
-    stereotype-based ratings using large language models (LLMs) via the 
+    stereotype-based typicality ratings using large language models (LLMs) via the 
     Hugging Face API, and evaluate them against human-annotated validation data. 
     Also includes functions to extract stereotype strength and base-rate items 
     from typicality matrices.

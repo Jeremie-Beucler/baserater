@@ -20,10 +20,8 @@ generate_typicality(
   return_raw_scores = TRUE,
   return_full_responses = FALSE,
   verbose = interactive(),
-  system_prompt =
-    "You are expert at accurately reproducing the stereotypical associations humans make, in order to annotate data for experiments.\\nYour focus is to capture common societal perceptions and stereotypes, rather than factual attributes of the groups, even when they are negative or unfounded.",
-  user_prompt_template =
-    "Rate how well the description \\"{description}\\" reflects the prototypical member of the group \\"{group}\\" on a scale from 0 (\\"Not at all\\") to 100 (\\"Extremely\\").\\n\\nTo clarify, consider the following examples:\\n1. \\"Rate how well the description \\"FUNNY\\" reflects the prototypical member of the group \\"CLOWN\\" on a scale from 0 (Not at all) to 100 (Extremely).\\" A high rating is expected because \\"FUNNY\\" closely aligns with typical characteristics of a \\"CLOWN\\".\\n2. \\"Rate how well the description \\"FEARFUL\\" reflects the prototypical member of the group \\"FIREFIGHTER\\" on a scale from 0 (Not at all) to 100 (Extremely).\\" A low rating is expected because \\"FEARFUL\\" diverges from typical characteristics of a \\"FIREFIGHTER\\".\\n3. \\"Rate how well the description \\"PATIENT\\" reflects the prototypical member of the group \\"ENGINEER\\" on a scale from 0 (Not at all) to 100 (Extremely).\\" A mid-scale rating is expected because \\"PATIENT\\" neither strongly aligns with nor diverges from typical characteristics of an \\"ENGINEER\\".\\n\\nYour response should be a single score between 0 and 100, with no additional text, letters, or symbols."
+  system_prompt = default_system_prompt(),
+  user_prompt_template = default_user_prompt_template()
 )
 }
 \arguments{
@@ -118,13 +116,16 @@ and the rendered \code{user_prompt_template} (where \code{{group}} and \code{{de
 are substituted with the actual values), separated by two newlines.
 
 The default \code{system_prompt} is:
-\preformatted{
-You are expert at accurately reproducing the stereotypical associations humans make, in order to annotate data for experiments.
-Your focus is to capture common societal perceptions and stereotypes, rather than factual attributes of the groups, even when they are negative or unfounded.
-}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{You are expert at accurately reproducing the stereotypical associations humans make,
+in order to annotate data for experiments.
+Your focus is to capture common societal perceptions and stereotypes,
+rather than factual attributes of the groups, even when they are negative or unfounded.
+}\if{html}{\out{</div>}}
+
 The default \code{user_prompt_template} is:
-\preformatted{
-Rate how well the description "{description}" reflects the prototypical member of the group "{group}" on a scale from 0 ("Not at all") to 100 ("Extremely").
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{Rate how well the description "\{description\}" reflects the prototypical member of the group "\{group\}" on a scale from 0 ("Not at all") to 100 ("Extremely").
 
 To clarify, consider the following examples:
 1. "Rate how well the description "FUNNY" reflects the prototypical member of the group "CLOWN" on a scale from 0 (Not at all) to 100 (Extremely)." A high rating is expected because "FUNNY" closely aligns with typical characteristics of a "CLOWN".
@@ -132,15 +133,17 @@ To clarify, consider the following examples:
 3. "Rate how well the description "PATIENT" reflects the prototypical member of the group "ENGINEER" on a scale from 0 (Not at all) to 100 (Extremely)." A mid-scale rating is expected because "PATIENT" neither strongly aligns with nor diverges from typical characteristics of an "ENGINEER".
 
 Your response should be a single score between 0 and 100, with no additional text, letters, or symbols.
-}
-You are responsible for ensuring that the combination of these prompts, or your custom prompts,
-includes any specific formatting tokens required by your model (e.g., instruction tags,
-chat role indicators like \verb{[INST]}, \verb{<|user|>}, etc.). The function itself
-only performs the concatenation described above.
+}\if{html}{\out{</div>}}
 
-Rate-limit friendliness: transient HTTP 429/5xx errors are retried (exponential
-back-off), and \code{wait_for_model = TRUE} is set so the call blocks until the
-model is ready.
+You are responsible for ensuring that the combination of these prompts, \\
+or your custom prompts, includes any specific formatting tokens required \\
+by your model (e.g., instruction tags, chat role indicators like \verb{[INST]}, \\
+\verb{<|user|>}, etc.). The function itself only performs the concatenation \\
+described above.
+
+Rate-limit friendliness: transient HTTP 429/5xx errors are retried \\
+(exponential back-off), and \code{wait_for_model = TRUE} is set so the call \\
+blocks until the model is ready.
 }
 
 \examples{
