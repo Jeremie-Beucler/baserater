@@ -1,27 +1,26 @@
-#' Generate typicality ratings via Hugging Face (experimental)
+#' Generate typicality ratings via an Inference Provider (experimental)
 #'
 #' @description
-#' This function uses the Hugging Face Inference API (or a compatible endpoint)
+#' This function uses an Inference Provider API from HuggingFace (e.g., from providers like Together AI)
 #' to generate typicality ratings by querying a large language model (LLM).
 #' It generates one or multiple ratings for each group-description pair and returns the mean score.
 #' It can be quite slow to run depending on the API.
 #'
 #' **Important:** Before running this function, please ensure that:
-#' - You have a valid Hugging Face API token (via `hf_token` or the `HF_API_TOKEN` environment variable);
-#' - You have a valid Hugging Face access token and have accepted the model’s license on the Hub;
-#' - The specified model is available and accessible via the Hugging Face API or your own hosted inference endpoint;
-#' - The model supports free-text input and generates numeric outputs in response to structured prompts.
+#' - You have a valid API token from your inference provider (via `api_token` or an environment variable);
+#' - You have provided the correct and complete URL for the provider's chat completions endpoint;
+#' - The specified model is available and accessible via the endpoint;
+#' - The model supports the standard `messages` array format (with system/user roles) and generates numeric outputs in response to the prompts.
 #'
 #' Calls to the API are rate-limited, may incur usage costs, and require an internet connection.
-#' This feature is **experimental** and is not guaranteed to work with all Hugging Face-hosted models.
+#' This feature is **experimental** and is not guaranteed to work with all models or providers.
 #'
-#' # Get Typicality Ratings from Hugging Face Models
+#' # Get Typicality Ratings from Large Language Models
 #'
 #' **generate_typicality()** sends structured prompts to any text-generation model
-#' hosted on the Hugging Face Inference API (or a self-hosted endpoint) and
-#' collects *numeric* ratings (0–100) of how well a *description* (e.g., an
-#' adjective) fits a *group* (e.g., an occupation). Responses that cannot be
-#' parsed into numbers are discarded.
+#' served via an compatible API endpoint and collects *numeric* ratings (0–100)
+#' of how well a *description* (e.g., an adjective) fits a *group* (e.g., an
+#' occupation). Responses that cannot be parsed into numbers are discarded.
 #'
 #' ## Modes
 #' * **Cross-product** (`matrix = TRUE`, *default*)    Rate every combination of
@@ -34,9 +33,10 @@
 #' **`n`** new samples; invalid or out-of-range answers are silently dropped.
 #'
 #' @section Prompting Details:
-#' The function constructs the final prompt sent to the model by concatenating the `system_prompt`
-#' and the rendered `user_prompt_template` (where `{group}` and `{description}`
-#' are substituted with the actual values), separated by two newlines.
+#' The function constructs a `messages` array for the API request.
+#' The `system_prompt` becomes the content of the `system` role message, and the
+#' rendered `user_prompt_template` (where `{group}` and `{description}`
+#' are substituted with the actual values) becomes the content of the `user` role message.
 #'
 #' The default `system_prompt` is:
 #'
@@ -60,23 +60,14 @@
 #' Your response should be a single score between 0 and 100, with no additional text, letters, or symbols.
 #' ```
 #'
-#' You are responsible for ensuring that the combination of these prompts, \\
-#' or your custom prompts, includes any specific formatting tokens required \\
-#' by your model (e.g., instruction tags, chat role indicators like `[INST]`, \\
-#' `<|user|>`, etc.). The function itself only performs the concatenation \\
-#' described above.
-#'
-#' Rate-limit friendliness: transient HTTP 429/5xx errors are retried \\
-#' (exponential back-off), and `wait_for_model = TRUE` is set so the call \\
-#' blocks until the model is ready.
+#' Rate-limit friendliness: transient HTTP 429/5xx errors are retried
+#' (exponential back-off).
 #'
 #' @param groups,descriptions   Character vectors. *When* `matrix = FALSE` they
 #'   **must** be the same length.
-#' @param model         Model ID on Hugging Face (ignored if `custom_url` is
-#'   supplied).
-#' @param custom_url    Fully-qualified HTTPS URL of a private Inference Endpoint
-#'   or self-hosted TGI server.
-#' @param hf_token A Hugging Face API token (see \url{https://huggingface.co/settings/tokens}). Defaults to \code{Sys.getenv("HF_API_TOKEN")}.
+#' @param api_url       Fully-qualified HTTPS URL for the provider's chat completions endpoint (e.g., "https://api.together.xyz/v1/chat/completions").
+#' @param api_token     API token for the inference provider.
+#' @param model         Model identifier string to be passed in the API request body. Check your provider's documentation for the available models and correct names.
 #' @param n             Samples requested per retry block (>= 1).
 #' @param min_valid     Minimum numeric scores required per pair (>= 1).
 #' @param temperature,top_p,max_tokens  Generation controls.
@@ -88,7 +79,7 @@
 #' @param verbose       If `TRUE`, prints progress: pair labels, retry counts,
 #'   running tallies, and raw model responses/errors as they occur.
 #' @param system_prompt Prompt string for the system message. See the 'Prompting Details' section and function signature for default content and customization.
-#' @param user_prompt_template Prompt template for the user message, with `{group}` and `{description}` placeholders. The prompt should already include any formatting tokens required by your model (e.g., special chat tags). No additional formatting is added by the function. See the 'Prompting Details' section and function signature for default content and customization.
+#' @param user_prompt_template Prompt template for the user message, with `{group}` and `{description}` placeholders. No additional formatting is added by the function. See the 'Prompting Details' section and function signature for default content and customization.
 #'
 #' @return
 #'   If a pair cannot reach min_valid, its mean is NA; raw invalid strings remain available when return_full_responses = TRUE.
@@ -107,13 +98,19 @@
 #' @examples
 #' \dontrun{
 #' # --- Minimal reproducible example (toy input) ---
+#' # Ensure you have set your API URL and Token, e.g.:
+#' # Sys.setenv(PROVIDER_API_URL = "https://api.together.xyz/v1/chat/completions")
+#' # Sys.setenv(PROVIDER_API_TOKEN = "your_secret_token_here")
+#'
 #' toy_groups <- c("engineer", "clown", "firefighter")
 #' toy_descriptions <- c("patient", "funny", "fearful")
 #'
 #' toy_result <- generate_typicality(
 #'   groups = toy_groups,
 #'   descriptions = toy_descriptions,
-#'   model = "meta-llama/Llama-3-70B-Instruct",
+#'   api_url = Sys.getenv("PROVIDER_API_URL"),
+#'   api_token = Sys.getenv("PROVIDER_API_TOKEN"),
+#'   model = "meta-llama/Llama-3.3-70B-Instruct-Turbo",
 #'   n = 10,
 #'   min_valid = 8, # at least 8 valid scores per pair, we take the mean of those
 #'   matrix = FALSE,
@@ -130,7 +127,9 @@
 #' # new_scores <- generate_typicality(
 #' #   groups                = ratings$group,
 #' #   descriptions          = ratings$adjective,
-#' #   model                 = "meta-llama/Llama-3.1-8B-Instruct",
+#' #   api_url               = Sys.getenv("PROVIDER_API_URL"),
+#' #   api_token             = Sys.getenv("PROVIDER_API_TOKEN"),
+#' #   model                 = "meta-llama/Llama-3.3-70B-Instruct-Turbo",
 #' #   n                     = 25,
 #' #   min_valid             = 20,
 #' #   max_tokens            = 5,
@@ -146,9 +145,9 @@
 generate_typicality <- function(
     groups,
     descriptions,
-    model              = "meta-llama/Llama-3-70B-Instruct",
-    custom_url         = NULL,
-    hf_token           = Sys.getenv("HF_API_TOKEN"),
+    api_url,
+    api_token,
+    model              = "meta-llama/Llama-3.3-70B-Instruct-Turbo",
     n                  = 25,
     min_valid          = ceiling(0.8 * n),
     temperature        = 1,
@@ -162,8 +161,11 @@ generate_typicality <- function(
     system_prompt = default_system_prompt(),
     user_prompt_template = default_user_prompt_template()) {
 
-  if (hf_token == "")
-    stop("Hugging Face API token not found. Set it using Sys.setenv(HF_API_TOKEN = 'your_token') or pass via `hf_token`.", call. = FALSE)
+  if (missing(api_url) || !is.character(api_url) || api_url == "")
+    stop("API endpoint URL not found. Please provide a valid URL via the `api_url` argument.", call. = FALSE)
+  if (missing(api_token) || !is.character(api_token) || api_token == "")
+    stop("API token not found. Please provide it via the `api_token` argument.", call. = FALSE)
+
 
   ## ---- helpers ----
   parse_num <- function(x) {
@@ -172,31 +174,38 @@ generate_typicality <- function(
     if (!is.na(v) && v >= 0 && v <= 100) v else NA_real_
   }
 
-  build_prompt <- function(g, d) {
-    user <- glue::glue(user_prompt_template, description = d, group = g)
-    paste(system_prompt, user, sep = "\n\n")
+  build_user_prompt <- function(g, d) {
+    glue::glue(user_prompt_template, description = d, group = g)
   }
 
-  perform_call <- function(prompt_text) {
-    api_params <- list(max_new_tokens   = max_tokens,
-                       return_full_text = FALSE,
-                       do_sample        = temperature > 1e-9,
-                       temperature      = temperature,
-                       top_p            = if (top_p < 1) top_p else NULL)
-    body <- list(inputs = prompt_text,
-                 parameters = api_params,
-                 options = list(use_cache = FALSE, wait_for_model = TRUE))
+  perform_call <- function(user_prompt_text) {
+    messages <- list(
+      list(role = "system", content = system_prompt),
+      list(role = "user", content = user_prompt_text)
+    )
 
-    url <- if (is.null(custom_url)) paste0("https://api-inference.huggingface.co/models/", model) else custom_url
+    body <- list(
+      model = model,
+      messages = messages,
+      max_tokens = max_tokens,
+      temperature = temperature,
+      top_p = if (top_p < 1) top_p else NULL,
+      n = n,
+      stream = FALSE
+    )
 
-    httr2::request(url) |>
-      httr2::req_headers(Authorization = paste("Bearer", hf_token),
-                         `Content-Type` = "application/json") |>
+    httr2::request(api_url) |>
+      httr2::req_headers(
+        Authorization = paste("Bearer", api_token),
+        `Content-Type` = "application/json"
+      ) |>
       httr2::req_body_json(body) |>
-      httr2::req_timeout(60) |> # Timeout changed to 60 seconds
-      httr2::req_retry(max_tries = 2, # 1 initial + 2 retries by httr2 for transient errors
-                       is_transient = \(r) httr2::resp_status(r) %in% c(429,500,502,503,504),
-                       backoff = ~stats::runif(1, min = 1, max = 5)) |> # Using stats::runif for backoff
+      httr2::req_timeout(60) |>
+      httr2::req_retry(
+        max_tries = 2, # 1 initial + 2 retries by httr2 for transient errors
+        is_transient = \(r) httr2::resp_status(r) %in% c(429, 500, 502, 503, 504),
+        backoff = ~stats::runif(1, min = 1, max = 5)
+      ) |>
       httr2::req_perform()
   }
 
@@ -251,92 +260,69 @@ generate_typicality <- function(
         }
       }
 
-      raw_texts_this_block <- character(n) # To store raw texts from this block's n attempts
-      parsed_scores_this_block <- numeric(0) # To store successfully parsed scores from this block
+      current_pair_total_api_attempts <- current_pair_total_api_attempts + 1
+      raw_texts_this_block <- character(0)
+      parsed_scores_this_block <- numeric(0)
 
-      for (sample_num_in_block in 1:n) {
-        current_pair_total_api_attempts <- current_pair_total_api_attempts + 1
-        raw_text_output_this_attempt <- NA_character_ # Initialize for this attempt
+      current_user_prompt <- build_user_prompt(g, d)
+      resp_obj <- try(perform_call(current_user_prompt), silent = TRUE)
 
-        current_prompt <- build_prompt(g,d)
-        resp_obj <- try(perform_call(current_prompt), silent = TRUE)
-
-        if (inherits(resp_obj, "try-error")) {
-          error_message <- as.character(resp_obj)
-          # Remove newlines from error message for cleaner printing
-          error_message_oneline <- gsub("\n", " ", error_message)
-          raw_text_output_this_attempt <- paste0("API_CALL_ERROR: ", error_message_oneline)
+      if (inherits(resp_obj, "try-error")) {
+        error_message <- as.character(resp_obj)
+        error_message_oneline <- gsub("\n", " ", error_message)
+        raw_texts_this_block <- paste0("API_CALL_ERROR: ", error_message_oneline)
+        if (verbose) {
+          message(sprintf("    API call failed. Error: %s", error_message_oneline))
+        }
+      } else {
+        status_code <- httr2::resp_status(resp_obj)
+        if (status_code >= 300) {
+          error_body_text <- tryCatch({
+            httr2::resp_body_string(resp_obj)
+          }, error = function(e_body) {
+            paste("Failed to retrieve error body:", as.character(e_body))
+          })
+          error_body_oneline <- gsub("\n", " ", error_body_text)
+          raw_texts_this_block <- paste0("HTTP_ERROR: ", status_code, " Body: ", error_body_oneline)
           if (verbose) {
-            message(sprintf("    Attempt %d (overall %d): API call failed. Error: %s",
-                            sample_num_in_block, current_pair_total_api_attempts, error_message_oneline))
+            message(sprintf("    HTTP error %d. Response: %s", status_code, error_body_oneline))
           }
         } else {
-          status_code <- httr2::resp_status(resp_obj)
-          if (status_code >= 300) {
-            error_body_text <- tryCatch({
-              httr2::resp_body_string(resp_obj)
-            }, error = function(e_body) {
-              paste("Failed to retrieve error body:", as.character(e_body))
-            })
-            error_body_oneline <- gsub("\n", " ", error_body_text)
-            raw_text_output_this_attempt <- paste0("HTTP_ERROR: ", status_code, " Body: ", error_body_oneline)
+          parsed_json_body <- try(httr2::resp_body_json(resp_obj), silent = TRUE)
+
+          if (inherits(parsed_json_body, "try-error")) {
+            json_error_oneline <- gsub("\n", " ", as.character(parsed_json_body))
+            raw_texts_this_block <- paste0("JSON_PARSE_ERROR: ", json_error_oneline)
             if (verbose) {
-              message(sprintf("    Attempt %d (overall %d): HTTP error %d. Response: %s",
-                              sample_num_in_block, current_pair_total_api_attempts, status_code, error_body_oneline))
+              message(sprintf("    Failed to parse JSON. Error: %s", json_error_oneline))
             }
-          } else { # Successful HTTP call (status < 300)
-            parsed_json_body <- try(httr2::resp_body_json(resp_obj), silent = TRUE)
-
-            if (inherits(parsed_json_body, "try-error")) {
-              json_error_oneline <- gsub("\n", " ", as.character(parsed_json_body))
-              raw_text_output_this_attempt <- paste0("JSON_PARSE_ERROR: ", json_error_oneline)
-              if(verbose){
-                message(sprintf("    Attempt %d (overall %d): Failed to parse JSON. Error: %s",
-                                sample_num_in_block, current_pair_total_api_attempts, json_error_oneline))
-              }
-            } else if (!is.list(parsed_json_body) || length(parsed_json_body) == 0 ||
-                       !is.list(parsed_json_body[[1]]) || !("generated_text" %in% names(parsed_json_body[[1]]))) {
-              raw_text_output_this_attempt <- "MODEL_RESPONSE_MALFORMED: Unexpected JSON structure or 'generated_text' field missing."
-              if (verbose) {
-                message(sprintf("    Attempt %d (overall %d): Model response malformed. Structure: %s",
-                                sample_num_in_block, current_pair_total_api_attempts, utils::str(parsed_json_body, max.level = 2)))
-              }
+          } else {
+            if (!is.list(parsed_json_body) || is.null(parsed_json_body$choices)) {
+              raw_texts_this_block <- "MODEL_RESPONSE_MALFORMED: Missing or invalid 'choices' field."
+              if (verbose) message("    Model response malformed or missing 'choices'.")
             } else {
-              model_generated_text <- parsed_json_body[[1]]$generated_text
-              if (is.null(model_generated_text)) { # Check if generated_text itself is NULL
-                raw_text_output_this_attempt <- "MODEL_RESPONSE_NULL: 'generated_text' field was null."
-                if(verbose){
-                  message(sprintf("    Attempt %d (overall %d): Model returned null for 'generated_text'.",
-                                  sample_num_in_block, current_pair_total_api_attempts))
-                }
-              } else {
-                raw_text_output_this_attempt <- model_generated_text # Store the actual text
+              # Extract multiple completions from parsed_json_body$choices
+              for (choice in parsed_json_body$choices) {
+                if (!is.null(choice$message$content)) {
+                  model_generated_text <- choice$message$content
+                  raw_texts_this_block <- c(raw_texts_this_block, model_generated_text)
 
-                if (verbose && return_full_responses) {
-                  message(sprintf("    Attempt %d (overall %d): Raw Model Response: \"%s\"",
-                                  sample_num_in_block, current_pair_total_api_attempts, model_generated_text))
-                }
+                  if (verbose && return_full_responses) {
+                    message(sprintf("    Model Response: \"%s\"", model_generated_text))
+                  }
 
-                parsed_num_val <- parse_num(model_generated_text)
-                if (!is.na(parsed_num_val)) {
-                  parsed_scores_this_block <- c(parsed_scores_this_block, parsed_num_val)
-                } else { # Not parsable
-                  if (verbose) {
-                    if (!return_full_responses) { # Text not yet printed
-                      message(sprintf("    Attempt %d (overall %d): Model Response \"%s\" (not parsable to valid score 0-100)",
-                                      sample_num_in_block, current_pair_total_api_attempts, model_generated_text))
-                    } else { # Text already printed, just add note
-                      message(sprintf("    Attempt %d (overall %d): (Above response not parsable to valid score 0-100)",
-                                      sample_num_in_block, current_pair_total_api_attempts))
-                    }
+                  parsed_num_val <- parse_num(model_generated_text)
+                  if (!is.na(parsed_num_val)) {
+                    parsed_scores_this_block <- c(parsed_scores_this_block, parsed_num_val)
+                  } else if (verbose) {
+                    message(sprintf("    (Response not parsable to valid score 0–100)"))
                   }
                 }
               }
             }
           }
         }
-        raw_texts_this_block[sample_num_in_block] <- raw_text_output_this_attempt
-      } # End loop for samples in block (sample_num_in_block)
+      }
 
       collected_good_scores <- c(collected_good_scores, parsed_scores_this_block)
       if (return_full_responses) {
@@ -389,5 +375,3 @@ default_system_prompt <- function() {
 default_user_prompt_template <- function() {
   'Rate how well the description "{description}" reflects the prototypical member of the group "{group}" on a scale from 0 ("Not at all") to 100 ("Extremely").\n\nTo clarify, consider the following examples:\n1. "Rate how well the description "FUNNY" reflects the prototypical member of the group "CLOWN" on a scale from 0 (Not at all) to 100 (Extremely)." A high rating is expected because "FUNNY" closely aligns with typical characteristics of a "CLOWN".\n2. "Rate how well the description "FEARFUL" reflects the prototypical member of the group "FIREFIGHTER" on a scale from 0 (Not at all) to 100 (Extremely)." A low rating is expected because "FEARFUL" diverges from typical characteristics of a "FIREFIGHTER".\n3. "Rate how well the description "PATIENT" reflects the prototypical member of the group "ENGINEER" on a scale from 0 (Not at all) to 100 (Extremely)." A mid-scale rating is expected because "PATIENT" neither strongly aligns with nor diverges from typical characteristics of an "ENGINEER".\n\nYour response should be a single score between 0 and 100, with no additional text, letters, or symbols.'
 }
-
-
