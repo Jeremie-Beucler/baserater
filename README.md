@@ -62,24 +62,28 @@ software\]. Zenodo. <https://doi.org/10.5281/zenodo.15449192>
 
 MIT
 
-## Hugging Face Resources
+## Inference Provider Resources
 
-Hugging Face is a platform that provides access to a wide range of
-pre-trained models and datasets for natural language processing (NLP)
-tasks. The `baserater` package uses Hugging Face’s API to generate
-typicality scores with various models. Here are some useful resources to
-get started with Hugging Face:
+The `baserater` package can connect to various inference providers such as Together AI, Hugging Face Inference, Fireworks, and Replicate.  
+These platforms host or serve large language models and allow you to query them through a standard OpenAI-style `chat/completions` API.
 
-- [Create a Hugging Face access
-  token](https://huggingface.co/settings/tokens) — Required to
-  authenticate API requests to hosted models.  
-- [Hugging Face Inference
-  Endpoints](https://huggingface.co/docs/inference-endpoints) — Set up
-  and deploy your own scalable model endpoint directly through Hugging
-  Face.  
-- [Hugging Face Inference
-  Providers](https://huggingface.co/docs/inference-providers) — Use
-  third-party infrastructure (e.g., AWS, Azure, Paperspace) to serve and
-  scale models.  
-- [Hugging Face Model Hub](https://huggingface.co/models) — Browse
-  available models (e.g., LLaMA, Mixtral) and view license requirements.
+Here are some useful resources to get started:
+
+- [Together AI](https://api.together.xyz/);
+- [Hugging Face Inference Endpoints](https://huggingface.co/docs/inference-endpoints);
+- [Fireworks AI](https://fireworks.ai/);
+- [Replicate](https://replicate.com/).
+
+Before generating new scores using the `generate_typicality()` function, make sure you have completed the following setup steps:
+
+- **Obtain your provider’s API URL and token:**  
+  You can pass them directly to the function or store them as environment variables in R, for example:  
+  `Sys.setenv(PROVIDER_API_URL = "https://api.together.xyz/v1/chat/completions")`  
+  `Sys.setenv(PROVIDER_API_TOKEN = "your_secret_token")`
+
+- **Check model availability and license terms:**  
+  Some models require that you accept license terms before use. Check your provider’s model catalog for details.
+
+- **Verify the correct model name for your provider:**  
+  Model identifiers can differ between providers (for example, `"meta-llama/Llama-3.3-70B-Instruct-Turbo"` on Together AI vs. `"meta-llama/Llama-3.3-70B-Instruct"` on Hugging Face).  
+  Always use the exact model name listed in your provider’s documentation.

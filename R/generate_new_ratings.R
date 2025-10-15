@@ -18,7 +18,7 @@
 #' # Get Typicality Ratings from Large Language Models
 #'
 #' **generate_typicality()** sends structured prompts to any text-generation model
-#' served via an compatible API endpoint and collects *numeric* ratings (0–100)
+#' served via an compatible API endpoint and collects *numeric* ratings (0-100)
 #' of how well a *description* (e.g., an adjective) fits a *group* (e.g., an
 #' occupation). Responses that cannot be parsed into numbers are discarded.
 #'
@@ -41,23 +41,37 @@
 #' The default `system_prompt` is:
 #'
 #' ```
-#' You are expert at accurately reproducing the stereotypical associations humans make,
-#' in order to annotate data for experiments.
+#' You are expert at accurately reproducing the stereotypical associations
+#' humans make, in order to annotate data for experiments.
 #' Your focus is to capture common societal perceptions and stereotypes,
-#' rather than factual attributes of the groups, even when they are negative or unfounded.
+#' rather than factual attributes of the groups,
+#' even when they are negative or unfounded.
 #' ```
 #'
 #' The default `user_prompt_template` is:
 #'
 #' ```
-#' Rate how well the description "{description}" reflects the prototypical member of the group "{group}" on a scale from 0 ("Not at all") to 100 ("Extremely").
+#' Rate how well the description "{description}" reflects the prototypical
+#' member of the group "{group}" on a scale from 0 ("Not at all") to 100
+#' ("Extremely").
 #'
 #' To clarify, consider the following examples:
-#' 1. "Rate how well the description "FUNNY" reflects the prototypical member of the group "CLOWN" on a scale from 0 (Not at all) to 100 (Extremely)." A high rating is expected because "FUNNY" closely aligns with typical characteristics of a "CLOWN".
-#' 2. "Rate how well the description "FEARFUL" reflects the prototypical member of the group "FIREFIGHTER" on a scale from 0 (Not at all) to 100 (Extremely)." A low rating is expected because "FEARFUL" diverges from typical characteristics of a "FIREFIGHTER".
-#' 3. "Rate how well the description "PATIENT" reflects the prototypical member of the group "ENGINEER" on a scale from 0 (Not at all) to 100 (Extremely)." A mid-scale rating is expected because "PATIENT" neither strongly aligns with nor diverges from typical characteristics of an "ENGINEER".
+#' 1. "Rate how well the description "FUNNY" reflects the prototypical member
+#'    of the group "CLOWN" on a scale from 0 (Not at all) to 100 (Extremely)."
+#'    A high rating is expected because "FUNNY" closely aligns with typical
+#'    characteristics of a "CLOWN".
+#' 2. "Rate how well the description "FEARFUL" reflects the prototypical member
+#'    of the group "FIREFIGHTER" on a scale from 0 (Not at all) to 100
+#'    (Extremely)." A low rating is expected because "FEARFUL" diverges from
+#'    typical characteristics of a "FIREFIGHTER".
+#' 3. "Rate how well the description "PATIENT" reflects the prototypical member
+#'    of the group "ENGINEER" on a scale from 0 (Not at all) to 100
+#'    (Extremely)." A mid-scale rating is expected because "PATIENT" neither
+#'    strongly aligns with nor diverges from typical characteristics of an
+#'    "ENGINEER".
 #'
-#' Your response should be a single score between 0 and 100, with no additional text, letters, or symbols.
+#' Your response should be a single score between 0 and 100, with no additional
+#' text, letters, or symbols.
 #' ```
 #'
 #' Rate-limit friendliness: transient HTTP 429/5xx errors are retried
@@ -315,7 +329,7 @@ generate_typicality <- function(
                   if (!is.na(parsed_num_val)) {
                     parsed_scores_this_block <- c(parsed_scores_this_block, parsed_num_val)
                   } else if (verbose) {
-                    message(sprintf("    (Response not parsable to valid score 0–100)"))
+                    message(sprintf("    (Response not parsable to valid score 0-100)"))
                   }
                 }
               }
@@ -366,12 +380,12 @@ generate_typicality <- function(
   out
 }
 
-# Internal helper – default system prompt
+# Internal helper - default system prompt
 default_system_prompt <- function() {
   "You are expert at accurately reproducing the stereotypical associations humans make, in order to annotate data for experiments.\nYour focus is to capture common societal perceptions and stereotypes, rather than factual attributes of the groups, even when they are negative or unfounded."
 }
 
-# Internal helper – default user-prompt template
+# Internal helper - default user-prompt template
 default_user_prompt_template <- function() {
   'Rate how well the description "{description}" reflects the prototypical member of the group "{group}" on a scale from 0 ("Not at all") to 100 ("Extremely").\n\nTo clarify, consider the following examples:\n1. "Rate how well the description "FUNNY" reflects the prototypical member of the group "CLOWN" on a scale from 0 (Not at all) to 100 (Extremely)." A high rating is expected because "FUNNY" closely aligns with typical characteristics of a "CLOWN".\n2. "Rate how well the description "FEARFUL" reflects the prototypical member of the group "FIREFIGHTER" on a scale from 0 (Not at all) to 100 (Extremely)." A low rating is expected because "FEARFUL" diverges from typical characteristics of a "FIREFIGHTER".\n3. "Rate how well the description "PATIENT" reflects the prototypical member of the group "ENGINEER" on a scale from 0 (Not at all) to 100 (Extremely)." A mid-scale rating is expected because "PATIENT" neither strongly aligns with nor diverges from typical characteristics of an "ENGINEER".\n\nYour response should be a single score between 0 and 100, with no additional text, letters, or symbols.'
 }

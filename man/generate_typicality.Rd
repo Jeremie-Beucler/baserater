@@ -2,14 +2,14 @@
 % Please edit documentation in R/generate_new_ratings.R
 \name{generate_typicality}
 \alias{generate_typicality}
-\title{Generate typicality ratings via Hugging Face (experimental)}
+\title{Generate typicality ratings via an Inference Provider (experimental)}
 \usage{
 generate_typicality(
   groups,
   descriptions,
-  model = "meta-llama/Llama-3-70B-Instruct",
-  custom_url = NULL,
-  hf_token = Sys.getenv("HF_API_TOKEN"),
+  api_url,
+  api_token,
+  model = "meta-llama/Llama-3.3-70B-Instruct-Turbo",
   n = 25,
   min_valid = ceiling(0.8 * n),
   temperature = 1,
@@ -28,13 +28,11 @@ generate_typicality(
 \item{groups, descriptions}{Character vectors. \emph{When} \code{matrix = FALSE} they
 \strong{must} be the same length.}
 
-\item{model}{Model ID on Hugging Face (ignored if \code{custom_url} is
-supplied).}
+\item{api_url}{Fully-qualified HTTPS URL for the provider's chat completions endpoint (e.g., "https://api.together.xyz/v1/chat/completions").}
 
-\item{custom_url}{Fully-qualified HTTPS URL of a private Inference Endpoint
-or self-hosted TGI server.}
+\item{api_token}{API token for the inference provider.}
 
-\item{hf_token}{A Hugging Face API token (see \url{https://huggingface.co/settings/tokens}). Defaults to \code{Sys.getenv("HF_API_TOKEN")}.}
+\item{model}{Model identifier string to be passed in the API request body. Check your provider's documentation for the available models and correct names.}
 
 \item{n}{Samples requested per retry block (>= 1).}
 
@@ -56,7 +54,7 @@ running tallies, and raw model responses/errors as they occur.}
 
 \item{system_prompt}{Prompt string for the system message. See the 'Prompting Details' section and function signature for default content and customization.}
 
-\item{user_prompt_template}{Prompt template for the user message, with \code{{group}} and \code{{description}} placeholders. The prompt should already include any formatting tokens required by your model (e.g., special chat tags). No additional formatting is added by the function. See the 'Prompting Details' section and function signature for default content and customization.}
+\item{user_prompt_template}{Prompt template for the user message, with \code{{group}} and \code{{description}} placeholders. No additional formatting is added by the function. See the 'Prompting Details' section and function signature for default content and customization.}
 }
 \value{
 If a pair cannot reach min_valid, its mean is NA; raw invalid strings remain available when return_full_responses = TRUE.
@@ -73,28 +71,27 @@ Paired mode (\code{matrix = FALSE}) -> a tibble with columns for \code{group}, \
 }
 }
 \description{
-This function uses the Hugging Face Inference API (or a compatible endpoint)
+This function uses an Inference Provider API from HuggingFace (e.g., from providers like Together AI)
 to generate typicality ratings by querying a large language model (LLM).
 It generates one or multiple ratings for each group-description pair and returns the mean score.
 It can be quite slow to run depending on the API.
 
 \strong{Important:} Before running this function, please ensure that:
 \itemize{
-\item You have a valid Hugging Face API token (via \code{hf_token} or the \code{HF_API_TOKEN} environment variable);
-\item You have a valid Hugging Face access token and have accepted the model’s license on the Hub;
-\item The specified model is available and accessible via the Hugging Face API or your own hosted inference endpoint;
-\item The model supports free-text input and generates numeric outputs in response to structured prompts.
+\item You have a valid API token from your inference provider (via \code{api_token} or an environment variable);
+\item You have provided the correct and complete URL for the provider's chat completions endpoint;
+\item The specified model is available and accessible via the endpoint;
+\item The model supports the standard \code{messages} array format (with system/user roles) and generates numeric outputs in response to the prompts.
 }
 
 Calls to the API are rate-limited, may incur usage costs, and require an internet connection.
-This feature is \strong{experimental} and is not guaranteed to work with all Hugging Face-hosted models.
+This feature is \strong{experimental} and is not guaranteed to work with all models or providers.
 }
-\section{Get Typicality Ratings from Hugging Face Models}{
+\section{Get Typicality Ratings from Large Language Models}{
 \strong{generate_typicality()} sends structured prompts to any text-generation model
-hosted on the Hugging Face Inference API (or a self-hosted endpoint) and
-collects \emph{numeric} ratings (0–100) of how well a \emph{description} (e.g., an
-adjective) fits a \emph{group} (e.g., an occupation). Responses that cannot be
-parsed into numbers are discarded.
+served via an compatible API endpoint and collects \emph{numeric} ratings (0-100)
+of how well a \emph{description} (e.g., an adjective) fits a \emph{group} (e.g., an
+occupation). Responses that cannot be parsed into numbers are discarded.
 \subsection{Modes}{
 \itemize{
 \item \strong{Cross-product} (\code{matrix = TRUE}, \emph{default})    Rate every combination of
@@ -111,51 +108,65 @@ are obtained or the retry budget is exhausted. One \emph{retry block} consists o
 
 \section{Prompting Details}{
 
-The function constructs the final prompt sent to the model by concatenating the \code{system_prompt}
-and the rendered \code{user_prompt_template} (where \code{{group}} and \code{{description}}
-are substituted with the actual values), separated by two newlines.
+The function constructs a \code{messages} array for the API request.
+The \code{system_prompt} becomes the content of the \code{system} role message, and the
+rendered \code{user_prompt_template} (where \code{{group}} and \code{{description}}
+are substituted with the actual values) becomes the content of the \code{user} role message.
 
 The default \code{system_prompt} is:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{You are expert at accurately reproducing the stereotypical associations humans make,
-in order to annotate data for experiments.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{You are expert at accurately reproducing the stereotypical associations
+humans make, in order to annotate data for experiments.
 Your focus is to capture common societal perceptions and stereotypes,
-rather than factual attributes of the groups, even when they are negative or unfounded.
+rather than factual attributes of the groups,
+even when they are negative or unfounded.
 }\if{html}{\out{</div>}}
 
 The default \code{user_prompt_template} is:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{Rate how well the description "\{description\}" reflects the prototypical member of the group "\{group\}" on a scale from 0 ("Not at all") to 100 ("Extremely").
+\if{html}{\out{<div class="sourceCode">}}\preformatted{Rate how well the description "\{description\}" reflects the prototypical
+member of the group "\{group\}" on a scale from 0 ("Not at all") to 100
+("Extremely").
 
 To clarify, consider the following examples:
-1. "Rate how well the description "FUNNY" reflects the prototypical member of the group "CLOWN" on a scale from 0 (Not at all) to 100 (Extremely)." A high rating is expected because "FUNNY" closely aligns with typical characteristics of a "CLOWN".
-2. "Rate how well the description "FEARFUL" reflects the prototypical member of the group "FIREFIGHTER" on a scale from 0 (Not at all) to 100 (Extremely)." A low rating is expected because "FEARFUL" diverges from typical characteristics of a "FIREFIGHTER".
-3. "Rate how well the description "PATIENT" reflects the prototypical member of the group "ENGINEER" on a scale from 0 (Not at all) to 100 (Extremely)." A mid-scale rating is expected because "PATIENT" neither strongly aligns with nor diverges from typical characteristics of an "ENGINEER".
+1. "Rate how well the description "FUNNY" reflects the prototypical member
+   of the group "CLOWN" on a scale from 0 (Not at all) to 100 (Extremely)."
+   A high rating is expected because "FUNNY" closely aligns with typical
+   characteristics of a "CLOWN".
+2. "Rate how well the description "FEARFUL" reflects the prototypical member
+   of the group "FIREFIGHTER" on a scale from 0 (Not at all) to 100
+   (Extremely)." A low rating is expected because "FEARFUL" diverges from
+   typical characteristics of a "FIREFIGHTER".
+3. "Rate how well the description "PATIENT" reflects the prototypical member
+   of the group "ENGINEER" on a scale from 0 (Not at all) to 100
+   (Extremely)." A mid-scale rating is expected because "PATIENT" neither
+   strongly aligns with nor diverges from typical characteristics of an
+   "ENGINEER".
 
-Your response should be a single score between 0 and 100, with no additional text, letters, or symbols.
+Your response should be a single score between 0 and 100, with no additional
+text, letters, or symbols.
 }\if{html}{\out{</div>}}
 
-You are responsible for ensuring that the combination of these prompts, \\
-or your custom prompts, includes any specific formatting tokens required \\
-by your model (e.g., instruction tags, chat role indicators like \verb{[INST]}, \\
-\verb{<|user|>}, etc.). The function itself only performs the concatenation \\
-described above.
-
-Rate-limit friendliness: transient HTTP 429/5xx errors are retried \\
-(exponential back-off), and \code{wait_for_model = TRUE} is set so the call \\
-blocks until the model is ready.
+Rate-limit friendliness: transient HTTP 429/5xx errors are retried
+(exponential back-off).
 }
 
 \examples{
 \dontrun{
 # --- Minimal reproducible example (toy input) ---
+# Ensure you have set your API URL and Token, e.g.:
+# Sys.setenv(PROVIDER_API_URL = "https://api.together.xyz/v1/chat/completions")
+# Sys.setenv(PROVIDER_API_TOKEN = "your_secret_token_here")
+
 toy_groups <- c("engineer", "clown", "firefighter")
 toy_descriptions <- c("patient", "funny", "fearful")
 
 toy_result <- generate_typicality(
   groups = toy_groups,
   descriptions = toy_descriptions,
-  model = "meta-llama/Llama-3-70B-Instruct",
+  api_url = Sys.getenv("PROVIDER_API_URL"),
+  api_token = Sys.getenv("PROVIDER_API_TOKEN"),
+  model = "meta-llama/Llama-3.3-70B-Instruct-Turbo",
   n = 10,
   min_valid = 8, # at least 8 valid scores per pair, we take the mean of those
   matrix = FALSE,
@@ -172,7 +183,9 @@ print(toy_result)
 # new_scores <- generate_typicality(
 #   groups                = ratings$group,
 #   descriptions          = ratings$adjective,
-#   model                 = "meta-llama/Llama-3.1-8B-Instruct",
+#   api_url               = Sys.getenv("PROVIDER_API_URL"),
+#   api_token             = Sys.getenv("PROVIDER_API_TOKEN"),
+#   model                 = "meta-llama/Llama-3.3-70B-Instruct-Turbo",
 #   n                     = 25,
 #   min_valid             = 20,
 #   max_tokens            = 5,
