@@ -1,11 +1,11 @@
-baserater package
+‘baserater’ package
 ================
 
 The `baserater` package allows to:
 
 - Download LLM‑generated base-rate item datasets and human validation
   ratings from the original paper.  
-- Generate new typicality scores with any Hugging Face model.  
+- Generate new typicality scores with any ‘Inference Provider’ model.  
 - Benchmark new scores against human ground truth, and compare
   performance against strong LLM baselines.  
 - Build base‑rate items database from typicality matrices.
@@ -30,7 +30,7 @@ The full documentation along with a tutorial is available at:
 <https://jeremie-beucler.github.io/baserater/>
 
 To learn more about the theoretical framework and studies underlying the
-baserater package, see the paper: *Using Large Language Models to
+‘baserater’ package, see the paper: *Using Large Language Models to
 Estimate Belief Strength in Reasoning* (Beucler et al., forthcoming).
 
 ## Installation
@@ -63,7 +63,7 @@ CRAN is available.
 
 ![](./man/figures/baserater_illustration.png) <br>
 
-*Schematic overview of the `baserater` package.*
+*Schematic overview of the ‘baserater’ package.*
 
 ## License
 
@@ -72,17 +72,18 @@ MIT
 ## Inference Provider Resources
 
 The `baserater` package can connect to various inference providers such
-as Together AI, Hugging Face Inference, Fireworks, and Replicate.  
+as ‘Together AI’, ‘Hugging Face’ Inference, ‘Fireworks’, and
+‘Replicate’.  
 These platforms host or serve large language models and allow you to
-query them through a standard OpenAI-style `chat/completions` API.
+query them through a standard style `chat/completions` API.
 
 Here are some useful resources to get started:
 
-- [Together AI](https://api.together.xyz/);
-- [Hugging Face Inference
+- [‘Together AI’](https://api.together.xyz/);
+- [‘Hugging Face’ Inference
   Endpoints](https://huggingface.co/docs/inference-endpoints);
-- [Fireworks AI](https://fireworks.ai/);
-- [Replicate](https://replicate.com/).
+- [‘Fireworks AI’](https://fireworks.ai/);
+- [‘Replicate’](https://replicate.com/).
 
 Before generating new scores using the `generate_typicality()` function,
 make sure you have completed the following setup steps:
@@ -99,7 +100,7 @@ make sure you have completed the following setup steps:
 
 - **Verify the correct model name for your provider:**  
   Model identifiers can differ between providers (for example,
-  `"meta-llama/Llama-3.3-70B-Instruct-Turbo"` on Together AI
-  vs. `"meta-llama/Llama-3.3-70B-Instruct"` on Hugging Face).  
+  `"meta-llama/Llama-3.3-70B-Instruct-Turbo"` on ‘Together AI’
+  vs. `"meta-llama/Llama-3.3-70B-Instruct"` on ‘Hugging Face’).  
   Always use the exact model name listed in your provider’s
   documentation.

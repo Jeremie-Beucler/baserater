@@ -2,7 +2,7 @@
 % Please edit documentation in R/generate_new_ratings.R
 \name{generate_typicality}
 \alias{generate_typicality}
-\title{Generate typicality ratings via an Inference Provider (experimental)}
+\title{Generate typicality ratings via an 'Inference Provider' (experimental)}
 \usage{
 generate_typicality(
   groups,
@@ -71,7 +71,7 @@ Paired mode (\code{matrix = FALSE}) -> a tibble with columns for \code{group}, \
 }
 }
 \description{
-This function uses a compatible Inference Provider API (e.g., Together AI or Fireworks)
+This function uses a compatible 'Inference Provider' API (e.g., 'Together AI' or 'Fireworks')
 to generate typicality ratings by querying a large language model (LLM).
 It generates one or multiple ratings for each group-description pair and returns the mean score.
 It can be quite slow to run depending on the API.

@@ -1,7 +1,7 @@
-#' Generate typicality ratings via an Inference Provider (experimental)
+#' Generate typicality ratings via an 'Inference Provider' (experimental)
 #'
 #' @description
-#' This function uses a compatible Inference Provider API (e.g., Together AI or Fireworks)
+#' This function uses a compatible 'Inference Provider' API (e.g., 'Together AI' or 'Fireworks')
 #' to generate typicality ratings by querying a large language model (LLM).
 #' It generates one or multiple ratings for each group-description pair and returns the mean score.
 #' It can be quite slow to run depending on the API.
