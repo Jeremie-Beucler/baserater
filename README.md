@@ -40,6 +40,10 @@ To install the latest development version from GitHub, run:
 ``` r
 # install.packages("pak")  # if not yet installed
 pak::pak("Jeremie-Beucler/baserater")
+
+# Alternatively, install via devtools
+# install.packages("devtools")  # if not yet installed
+devtools::install_github("Jeremie-Beucler/baserater")
 ```
 
 ## Citation
@@ -47,8 +51,10 @@ pak::pak("Jeremie-Beucler/baserater")
 Please cite the package as:
 
 Beucler, J. (2025). *baserater: An R package using large language models
-to estimate belief strength in reasoning* (Version 0.1.0) \[Computer
-software\]. Zenodo. <https://doi.org/10.5281/zenodo.15449192>
+to estimate belief strength in reasoning* \[Computer
+software\]. Zenodo. <https://doi.org/10.5281/zenodo.15449191>
+
+Note: this is a temporary repository doi, until the actual release on CRAN is available.
 
 ## Package overview
 

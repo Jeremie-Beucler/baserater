@@ -71,7 +71,7 @@ Paired mode (\code{matrix = FALSE}) -> a tibble with columns for \code{group}, \
 }
 }
 \description{
-This function uses an Inference Provider API from HuggingFace (e.g., from providers like Together AI)
+This function uses a compatible Inference Provider API (e.g., Together AI or Fireworks)
 to generate typicality ratings by querying a large language model (LLM).
 It generates one or multiple ratings for each group-description pair and returns the mean score.
 It can be quite slow to run depending on the API.

@@ -1,6 +1,6 @@
 Package: baserater
 Title: Tools for Base-Rate Item Evaluation and Typicality Scoring Using Large Language Models
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person("Jeremie", "Beucler", email = "jeremie.beucler@gmail.com", role = c("aut", "cre"))
 Description: Tools to download typicality rating datasets, generate new 
