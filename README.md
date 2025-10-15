@@ -51,10 +51,11 @@ devtools::install_github("Jeremie-Beucler/baserater")
 Please cite the package as:
 
 Beucler, J. (2025). *baserater: An R package using large language models
-to estimate belief strength in reasoning* \[Computer
-software\]. Zenodo. <https://doi.org/10.5281/zenodo.15449191>
+to estimate belief strength in reasoning* \[Computer software\]. Zenodo.
+<https://doi.org/10.5281/zenodo.15449191>
 
-Note: this is a temporary repository doi, until the actual release on CRAN is available.
+Note: this is a temporary repository doi, until the actual release on
+CRAN is available.
 
 ## Package overview
 
@@ -70,26 +71,35 @@ MIT
 
 ## Inference Provider Resources
 
-The `baserater` package can connect to various inference providers such as Together AI, Hugging Face Inference, Fireworks, and Replicate.  
-These platforms host or serve large language models and allow you to query them through a standard OpenAI-style `chat/completions` API.
+The `baserater` package can connect to various inference providers such
+as Together AI, Hugging Face Inference, Fireworks, and Replicate.  
+These platforms host or serve large language models and allow you to
+query them through a standard OpenAI-style `chat/completions` API.
 
 Here are some useful resources to get started:
 
 - [Together AI](https://api.together.xyz/);
-- [Hugging Face Inference Endpoints](https://huggingface.co/docs/inference-endpoints);
+- [Hugging Face Inference
+  Endpoints](https://huggingface.co/docs/inference-endpoints);
 - [Fireworks AI](https://fireworks.ai/);
 - [Replicate](https://replicate.com/).
 
-Before generating new scores using the `generate_typicality()` function, make sure you have completed the following setup steps:
+Before generating new scores using the `generate_typicality()` function,
+make sure you have completed the following setup steps:
 
 - **Obtain your provider’s API URL and token:**  
-  You can pass them directly to the function or store them as environment variables in R, for example:  
+  You can pass them directly to the function or store them as
+  environment variables in R, for example:  
   `Sys.setenv(PROVIDER_API_URL = "https://api.together.xyz/v1/chat/completions")`  
   `Sys.setenv(PROVIDER_API_TOKEN = "your_secret_token")`
 
 - **Check model availability and license terms:**  
-  Some models require that you accept license terms before use. Check your provider’s model catalog for details.
+  Some models require that you accept license terms before use. Check
+  your provider’s model catalog for details.
 
 - **Verify the correct model name for your provider:**  
-  Model identifiers can differ between providers (for example, `"meta-llama/Llama-3.3-70B-Instruct-Turbo"` on Together AI vs. `"meta-llama/Llama-3.3-70B-Instruct"` on Hugging Face).  
-  Always use the exact model name listed in your provider’s documentation.
+  Model identifiers can differ between providers (for example,
+  `"meta-llama/Llama-3.3-70B-Instruct-Turbo"` on Together AI
+  vs. `"meta-llama/Llama-3.3-70B-Instruct"` on Hugging Face).  
+  Always use the exact model name listed in your provider’s
+  documentation.
