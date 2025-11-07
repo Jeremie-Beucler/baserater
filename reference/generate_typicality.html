@@ -231,13 +231,12 @@ are substituted with the actual values) becomes the content of the <code>user</c
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># --- Minimal reproducible example (toy input) ---</span></span></span>
-<span class="r-in"><span><span class="co"># Ensure you have set your API URL and Token, e.g.:</span></span></span>
-<span class="r-in"><span><span class="co"># Sys.setenv(PROVIDER_API_URL = "https://api.together.xyz/v1/chat/completions")</span></span></span>
-<span class="r-in"><span><span class="co"># Sys.setenv(PROVIDER_API_TOKEN = "your_secret_token_here")</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">toy_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"engineer"</span>, <span class="st">"clown"</span>, <span class="st">"firefighter"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>PROVIDER_API_URL <span class="op">=</span> <span class="st">"https://api.together.xyz/v1/chat/completions"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>PROVIDER_API_TOKEN <span class="op">=</span> <span class="st">"your_secret_token_here"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">toy_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"engineer"</span>, <span class="st">"clown"</span>, <span class="st">"firefighter"</span><span class="op">)</span> <span class="co"># Minimal example</span></span></span>
 <span class="r-in"><span><span class="va">toy_descriptions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patient"</span>, <span class="st">"funny"</span>, <span class="st">"fearful"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">toy_result</span> <span class="op">&lt;-</span> <span class="fu">generate_typicality</span><span class="op">(</span></span></span>
@@ -247,36 +246,805 @@ are substituted with the actual values) becomes the content of the <code>user</c
 <span class="r-in"><span>  api_token <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"PROVIDER_API_TOKEN"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  model <span class="op">=</span> <span class="st">"meta-llama/Llama-3.3-70B-Instruct-Turbo"</span>,</span></span>
 <span class="r-in"><span>  n <span class="op">=</span> <span class="fl">10</span>,</span></span>
-<span class="r-in"><span>  min_valid <span class="op">=</span> <span class="fl">8</span>, <span class="co"># at least 8 valid scores per pair, we take the mean of those</span></span></span>
+<span class="r-in"><span>  min_valid <span class="op">=</span> <span class="fl">8</span>,</span></span>
 <span class="r-in"><span>  matrix <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>  return_raw_scores <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>  return_full_responses <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Starting generate_typicality - 3 pairs (10 samples per block, min 8 valid scores per pair, up to 4 retry blocks)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [1/3] Processing pair: engineer x patient</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 4 (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 2 of 4 (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 3 of 4 (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 4 of 4 (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [2/3] Processing pair: clown x funny</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 4 (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 2 of 4 (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 3 of 4 (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 4 of 4 (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [3/3] Processing pair: firefighter x fearful</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 4 (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 2 of 4 (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 3 of 4 (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 4 of 4 (up to 10 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 8.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished - 0 / 3 pairs have a calculated mean score.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">toy_result</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   group       description mean_score raw_scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> engineer    patient             <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl [0]&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> clown       funny               <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl [0]&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> firefighter fearful             <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl [0]&gt;</span> </span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># --- Full-scale example using the validation ratings ---</span></span></span>
-<span class="r-in"><span><span class="co"># ratings &lt;- download_data("validation_ratings")</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># new_scores &lt;- generate_typicality(</span></span></span>
-<span class="r-in"><span><span class="co">#   groups                = ratings$group,</span></span></span>
-<span class="r-in"><span><span class="co">#   descriptions          = ratings$adjective,</span></span></span>
-<span class="r-in"><span><span class="co">#   api_url               = Sys.getenv("PROVIDER_API_URL"),</span></span></span>
-<span class="r-in"><span><span class="co">#   api_token             = Sys.getenv("PROVIDER_API_TOKEN"),</span></span></span>
-<span class="r-in"><span><span class="co">#   model                 = "meta-llama/Llama-3.3-70B-Instruct-Turbo",</span></span></span>
-<span class="r-in"><span><span class="co">#   n                     = 25,</span></span></span>
-<span class="r-in"><span><span class="co">#   min_valid             = 20,</span></span></span>
-<span class="r-in"><span><span class="co">#   max_tokens            = 5,</span></span></span>
-<span class="r-in"><span><span class="co">#   retries               = 1,</span></span></span>
-<span class="r-in"><span><span class="co">#   matrix                = FALSE,</span></span></span>
-<span class="r-in"><span><span class="co">#   return_raw_scores     = TRUE,</span></span></span>
-<span class="r-in"><span><span class="co">#   return_full_responses = TRUE,</span></span></span>
-<span class="r-in"><span><span class="co">#   verbose               = TRUE</span></span></span>
-<span class="r-in"><span><span class="co"># )</span></span></span>
+<span class="r-in"><span><span class="va">ratings</span> <span class="op">&lt;-</span> <span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span><span class="st">"validation_ratings"</span><span class="op">)</span> <span class="co"># Full-scale example</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># head(new_scores)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="va">new_scores</span> <span class="op">&lt;-</span> <span class="fu">generate_typicality</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  groups                <span class="op">=</span> <span class="va">ratings</span><span class="op">$</span><span class="va">group</span>,</span></span>
+<span class="r-in"><span>  descriptions          <span class="op">=</span> <span class="va">ratings</span><span class="op">$</span><span class="va">adjective</span>,</span></span>
+<span class="r-in"><span>  api_url               <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"PROVIDER_API_URL"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  api_token             <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"PROVIDER_API_TOKEN"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  model                 <span class="op">=</span> <span class="st">"meta-llama/Llama-3.3-70B-Instruct-Turbo"</span>,</span></span>
+<span class="r-in"><span>  n                     <span class="op">=</span> <span class="fl">25</span>,</span></span>
+<span class="r-in"><span>  min_valid             <span class="op">=</span> <span class="fl">20</span>,</span></span>
+<span class="r-in"><span>  max_tokens            <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  retries               <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  matrix                <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  return_raw_scores     <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  return_full_responses <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  verbose               <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Starting generate_typicality - 100 pairs (25 samples per block, min 20 valid scores per pair, up to 1 retry blocks)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [1/100] Processing pair: DJ x naive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [2/100] Processing pair: accountant x solitary</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [3/100] Processing pair: actor x altruistic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [4/100] Processing pair: aerobics instructor x impulsive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [5/100] Processing pair: architect x charismatic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [6/100] Processing pair: architect x reserved</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [7/100] Processing pair: artist x confident</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [8/100] Processing pair: artist x generous</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [9/100] Processing pair: assistant x dishonest</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [10/100] Processing pair: assistant x generous</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [11/100] Processing pair: bartender x moody</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [12/100] Processing pair: bartender x social</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [13/100] Processing pair: boxer x attractive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [14/100] Processing pair: boxer x disorganized</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [15/100] Processing pair: boxer x muscular</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [16/100] Processing pair: boxer x solitary</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [17/100] Processing pair: boxer x zealous</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [18/100] Processing pair: businessman x rational</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [19/100] Processing pair: chef x creative</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [20/100] Processing pair: chef x funny</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [21/100] Processing pair: chef x warm</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [22/100] Processing pair: clown x disorganized</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [23/100] Processing pair: computer programmer x inventive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [24/100] Processing pair: construction worker x dishonest</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [25/100] Processing pair: construction worker x stubborn</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [26/100] Processing pair: consultant x conservative</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [27/100] Processing pair: consultant x friendly</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [28/100] Processing pair: consultant x social</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [29/100] Processing pair: dentist x charismatic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [30/100] Processing pair: doctor x intelligent</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [31/100] Processing pair: doctor x organized</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [32/100] Processing pair: drummer x attractive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [33/100] Processing pair: drummer x inventive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [34/100] Processing pair: drummer x naive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [35/100] Processing pair: electrician x confident</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [36/100] Processing pair: electrician x narcissistic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [37/100] Processing pair: engineer x reserved</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [38/100] Processing pair: environmental activist x active</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [39/100] Processing pair: environmental activist x cooperative</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [40/100] Processing pair: environmental activist x warm</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [41/100] Processing pair: farmer x empathetic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [42/100] Processing pair: farmer x gentle</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [43/100] Processing pair: farmer x hardworking</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [44/100] Processing pair: fashion designer x loud</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [45/100] Processing pair: fashion model x attractive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [46/100] Processing pair: fashion model x impulsive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [47/100] Processing pair: fireman x brave</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [48/100] Processing pair: fireman x impulsive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [49/100] Processing pair: fitness trainer x inventive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [50/100] Processing pair: fitness trainer x naive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [51/100] Processing pair: flight attendant x immature</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [52/100] Processing pair: flight attendant x lazy</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [53/100] Processing pair: flight attendant x muscular</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [54/100] Processing pair: flight attendant x narrow-minded</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [55/100] Processing pair: gardener x charismatic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [56/100] Processing pair: high school coach x nerdy</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [57/100] Processing pair: hippy x active</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [58/100] Processing pair: hippy x shy</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [59/100] Processing pair: historian x nerdy</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [60/100] Processing pair: journalist x ambitious</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [61/100] Processing pair: journalist x disorganized</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [62/100] Processing pair: journalist x kind</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [63/100] Processing pair: kindergarten teacher x helpful</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [64/100] Processing pair: lab technician x creative</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [65/100] Processing pair: librarian x bossy</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [66/100] Processing pair: music producer x friendly</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [67/100] Processing pair: nanny x altruistic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [68/100] Processing pair: nanny x naive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [69/100] Processing pair: nanny x trustworthy</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [70/100] Processing pair: nurse x active</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [71/100] Processing pair: nurse x brave</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [72/100] Processing pair: nurse x inventive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [73/100] Processing pair: paramedic x disorganized</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [74/100] Processing pair: paramedic x generous</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [75/100] Processing pair: photographer x loud</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [76/100] Processing pair: pilot x cooperative</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [77/100] Processing pair: police officer x extravagant</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [78/100] Processing pair: police officer x lazy</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [79/100] Processing pair: police officer x solitary</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [80/100] Processing pair: psychologist x unconventional</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [81/100] Processing pair: real estate agent x impulsive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [82/100] Processing pair: real estate agent x organized</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [83/100] Processing pair: real estate agent x passionate</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [84/100] Processing pair: scientist x rational</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [85/100] Processing pair: scientist x unconventional</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [86/100] Processing pair: secretary x extravagant</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [87/100] Processing pair: secretary x shy</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [88/100] Processing pair: sixteen year old x reserved</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [89/100] Processing pair: sixteen year old x shy</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [90/100] Processing pair: social worker x ambitious</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [91/100] Processing pair: social worker x social</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [92/100] Processing pair: soldier x charismatic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [93/100] Processing pair: soldier x loud</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [94/100] Processing pair: soldier x social</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [95/100] Processing pair: surgeon x creative</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [96/100] Processing pair: surgeon x meticulous</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [97/100] Processing pair: surgeon x persuasive</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [98/100] Processing pair: telemarketer x argumentative</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [99/100] Processing pair: veterinarian x ambitious</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [100/100] Processing pair: writer x idealistic</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Initial sampling block (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Retry block 1 of 1 (up to 25 samples)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     API call failed. Error: Error in httr2::req_perform(httr2::req_retry(httr2::req_timeout(httr2::req_body_json(httr2::req_headers(httr2::request(api_url),  :    HTTP 401 Unauthorized. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   - Block summary: 0 valid scores obtained this block. Total valid for pair: 0 / 20.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Finished - 0 / 100 pairs have a calculated mean score.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">new_scores</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   group               description mean_score raw_scores full_responses</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> DJ                  naive               <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl [0]&gt;</span>  <span style="color: #949494;">&lt;chr [2]&gt;</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> accountant          solitary            <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl [0]&gt;</span>  <span style="color: #949494;">&lt;chr [2]&gt;</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> actor               altruistic          <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl [0]&gt;</span>  <span style="color: #949494;">&lt;chr [2]&gt;</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> aerobics instructor impulsive           <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl [0]&gt;</span>  <span style="color: #949494;">&lt;chr [2]&gt;</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> architect           charismatic         <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl [0]&gt;</span>  <span style="color: #949494;">&lt;chr [2]&gt;</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> architect           reserved            <span style="color: #BB0000;">NA</span> <span style="color: #949494;">&lt;dbl [0]&gt;</span>  <span style="color: #949494;">&lt;chr [2]&gt;</span>     </span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
