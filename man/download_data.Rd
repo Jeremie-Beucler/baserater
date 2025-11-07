@@ -30,18 +30,14 @@ This function gives access to key datasets included in the \code{baserater} pack
 }
 }
 \examples{
-# Load the full base-rate database (LLM-generated stereotype strengths)
+
 database <- download_data("database")
 
-# Load validation ratings (human, 'GPT-4', 'LLaMA 3.3') for 100 items
 ratings <- download_data("validation_ratings")
 
-# Load the raw typicality matrix from 'GPT-4'
 gpt4_matrix <- download_data("typicality_matrix_gpt4")
 
-# Load the raw typicality matrix from 'LLaMA 3.3'
 llama3_matrix <- download_data("typicality_matrix_llama3.3")
 
-# Load group and adjective material used to build the database
 material <- download_data("material")
 }

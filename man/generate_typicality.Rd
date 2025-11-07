@@ -152,13 +152,12 @@ Rate-limit friendliness: transient HTTP 429/5xx errors are retried
 }
 
 \examples{
-\dontrun{
-# --- Minimal reproducible example (toy input) ---
-# Ensure you have set your API URL and Token, e.g.:
-# Sys.setenv(PROVIDER_API_URL = "https://api.together.xyz/v1/chat/completions")
-# Sys.setenv(PROVIDER_API_TOKEN = "your_secret_token_here")
+\donttest{
 
-toy_groups <- c("engineer", "clown", "firefighter")
+Sys.setenv(PROVIDER_API_URL = "https://api.together.xyz/v1/chat/completions")
+Sys.setenv(PROVIDER_API_TOKEN = "your_secret_token_here")
+
+toy_groups <- c("engineer", "clown", "firefighter") # Minimal example
 toy_descriptions <- c("patient", "funny", "fearful")
 
 toy_result <- generate_typicality(
@@ -168,7 +167,7 @@ toy_result <- generate_typicality(
   api_token = Sys.getenv("PROVIDER_API_TOKEN"),
   model = "meta-llama/Llama-3.3-70B-Instruct-Turbo",
   n = 10,
-  min_valid = 8, # at least 8 valid scores per pair, we take the mean of those
+  min_valid = 8,
   matrix = FALSE,
   return_raw_scores = TRUE,
   return_full_responses = FALSE,
@@ -176,26 +175,28 @@ toy_result <- generate_typicality(
 )
 
 print(toy_result)
+}
 
-# --- Full-scale example using the validation ratings ---
-# ratings <- download_data("validation_ratings")
+\donttest{
 
-# new_scores <- generate_typicality(
-#   groups                = ratings$group,
-#   descriptions          = ratings$adjective,
-#   api_url               = Sys.getenv("PROVIDER_API_URL"),
-#   api_token             = Sys.getenv("PROVIDER_API_TOKEN"),
-#   model                 = "meta-llama/Llama-3.3-70B-Instruct-Turbo",
-#   n                     = 25,
-#   min_valid             = 20,
-#   max_tokens            = 5,
-#   retries               = 1,
-#   matrix                = FALSE,
-#   return_raw_scores     = TRUE,
-#   return_full_responses = TRUE,
-#   verbose               = TRUE
-# )
+ratings <- download_data("validation_ratings") # Full-scale example
 
-# head(new_scores)
+new_scores <- generate_typicality(
+  groups                = ratings$group,
+  descriptions          = ratings$adjective,
+  api_url               = Sys.getenv("PROVIDER_API_URL"),
+  api_token             = Sys.getenv("PROVIDER_API_TOKEN"),
+  model                 = "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+  n                     = 25,
+  min_valid             = 20,
+  max_tokens            = 5,
+  retries               = 1,
+  matrix                = FALSE,
+  return_raw_scores     = TRUE,
+  return_full_responses = TRUE,
+  verbose               = TRUE
+)
+
+head(new_scores)
 }
 }
