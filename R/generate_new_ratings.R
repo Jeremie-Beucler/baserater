@@ -110,7 +110,7 @@
 #'   }
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #'
 #' Sys.setenv(PROVIDER_API_URL = "https://api.together.xyz/v1/chat/completions")
 #' Sys.setenv(PROVIDER_API_TOKEN = "your_secret_token_here")
@@ -135,7 +135,7 @@
 #' print(toy_result)
 #' }
 #'
-#' \donttest{
+#' \dontrun{
 #'
 #' ratings <- download_data("validation_ratings") # Full-scale example
 #'

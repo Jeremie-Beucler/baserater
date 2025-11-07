@@ -152,7 +152,7 @@ Rate-limit friendliness: transient HTTP 429/5xx errors are retried
 }
 
 \examples{
-\donttest{
+\dontrun{
 
 Sys.setenv(PROVIDER_API_URL = "https://api.together.xyz/v1/chat/completions")
 Sys.setenv(PROVIDER_API_TOKEN = "your_secret_token_here")
@@ -177,7 +177,7 @@ toy_result <- generate_typicality(
 print(toy_result)
 }
 
-\donttest{
+\dontrun{
 
 ratings <- download_data("validation_ratings") # Full-scale example
 
