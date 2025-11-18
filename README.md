@@ -29,17 +29,17 @@ characteristic of engineers than of construction workers).
 The full documentation along with a tutorial is available at:
 <https://jeremie-beucler.github.io/baserater/>
 
-To learn more about the theoretical framework and studies underlying the
+To learn more about the theoretical framework and studies underlying the 
 ‘baserater’ package, see the paper: *Using Large Language Models to
-Estimate Belief Strength in Reasoning* (Beucler et al., forthcoming).
+Estimate Belief Strength in Reasoning* (Beucler et al., 2025), available
+at https://doi.org/10.31234/osf.io/eqrfu_v1.
 
 ## Installation
 
-To install the latest development version from GitHub, run:
+To install the package, run:
 
 ``` r
-# install.packages("pak")  # if not yet installed
-pak::pak("Jeremie-Beucler/baserater")
+install.packages("baserater")
 
 # Alternatively, install via devtools
 # install.packages("devtools")  # if not yet installed
@@ -50,12 +50,7 @@ devtools::install_github("Jeremie-Beucler/baserater")
 
 Please cite the package as:
 
-Beucler, J. (2025). *baserater: An R package using large language models
-to estimate belief strength in reasoning* \[Computer software\]. Zenodo.
-<https://doi.org/10.5281/zenodo.15449191>
-
-Note: this is a temporary repository doi, until the actual release on
-CRAN is available.
+Beucler, J. (2025). *baserater: An R package using large language models to estimate belief strength in reasoning.* R package version 0.1.2. https://doi.org/10.32614/CRAN.package.baserater
 
 ## Package overview
 

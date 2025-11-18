@@ -3,7 +3,7 @@ bibentry(
   title   = "baserater: An R package using large language models to estimate belief strength in reasoning",
   author  = person("Jeremie", "Beucler"),
   year    = 2025,
-  note    = "Version 0.1.1. Zenodo archive.",
-  doi     = "10.5281/zenodo.15449191",
-  url     = "https://doi.org/10.5281/zenodo.15449191"
+  note    = "R package version 0.1.2",
+  doi     = "10.32614/CRAN.package.baserater",
+  textVersion = "Beucler, J. (2025). baserater: An R package using large language models to estimate belief strength in reasoning. R package version 0.1.2. https://doi.org/10.32614/CRAN.package.baserater"
 )
