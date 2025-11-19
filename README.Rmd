@@ -7,6 +7,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+[![CRAN status](https://www.r-pkg.org/badges/version/baserater)](https://CRAN.R-project.org/package=baserater)
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/baserater)](https://CRAN.R-project.org/package=baserater)
+
 The `baserater` package allows to:  
 
 - Download LLM‑generated base-rate item datasets and human validation ratings from the original paper.  
@@ -30,17 +33,26 @@ knitr::opts_chunk$set(
 
 ## Installation
 
-To install the latest development version from GitHub, run:
+You can install the stable CRAN release of **baserater** with:
 
-```{r}
+```{r, eval=FALSE}
 install.packages("baserater")
+```
 
-# Alternatively, install via devtools
+To install the development version from GitHub:
+
+```{r, eval=FALSE}
 # install.packages("devtools")  # if not yet installed
 devtools::install_github("Jeremie-Beucler/baserater")
 ```
 
 ## Citation
+
+To cite **baserater** in publications, run:
+
+```{r, eval=FALSE}
+citation("baserater")
+```
 
 Please cite the package as:
 

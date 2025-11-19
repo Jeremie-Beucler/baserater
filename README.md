@@ -1,6 +1,11 @@
 ‘baserater’ package
 ================
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/baserater)](https://CRAN.R-project.org/package=baserater)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/baserater)](https://CRAN.R-project.org/package=baserater)
+
 The `baserater` package allows to:
 
 - Download LLM‑generated base-rate item datasets and human validation
@@ -29,28 +34,39 @@ characteristic of engineers than of construction workers).
 The full documentation along with a tutorial is available at:
 <https://jeremie-beucler.github.io/baserater/>
 
-To learn more about the theoretical framework and studies underlying the 
+To learn more about the theoretical framework and studies underlying the
 ‘baserater’ package, see the paper: *Using Large Language Models to
 Estimate Belief Strength in Reasoning* (Beucler et al., 2025), available
-at https://doi.org/10.31234/osf.io/eqrfu_v1.
+at <https://doi.org/10.31234/osf.io/eqrfu_v1>.
 
 ## Installation
 
-To install the package, run:
+You can install the stable CRAN release of **baserater** with:
 
 ``` r
 install.packages("baserater")
+```
 
-# Alternatively, install via devtools
+To install the development version from GitHub:
+
+``` r
 # install.packages("devtools")  # if not yet installed
 devtools::install_github("Jeremie-Beucler/baserater")
 ```
 
 ## Citation
 
+To cite **baserater** in publications, run:
+
+``` r
+citation("baserater")
+```
+
 Please cite the package as:
 
-Beucler, J. (2025). *baserater: An R package using large language models to estimate belief strength in reasoning.* R package version 0.1.2. https://doi.org/10.32614/CRAN.package.baserater
+Beucler, J. (2025). *baserater: An R package using large language models
+to estimate belief strength in reasoning.* R package version 0.1.2.
+<https://doi.org/10.32614/CRAN.package.baserater>
 
 ## Package overview
 
